@@ -3,18 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: linyao <linyao@student.42barcelona.co      +#+  +:+       +#+         #
+#    By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 17:23:25 by linyao            #+#    #+#              #
-#    Updated: 2024/11/21 17:23:31 by linyao           ###   ########.fr        #
+#    Updated: 2024/11/22 23:10:27 by linyao           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= miniRT
 INC			= ./inc/
+LIB			= ./lib/
 INC_HEADERS	= $(INC)minirt.h
 
-FT			= $(INC)libft/
+FT			= $(LIB)libft/
 FT_INC		= $(FT)/libft.h
 FT_LNK		= -L$(FT) -lft
 FT_LIB		= $(FT)libft.a
@@ -35,7 +36,7 @@ else ifeq ($(UNAME), Darwin)
 	NUMPROC = $(shell sysctl -n hw.ncpu)
 	LINKFLAGS	= -Lminilibx_macos -lmlx -framework OpenGL -framework AppKit
 	MLX_DIR = minilibx_macos
-	MLX_TARGET = libmlx.dylib
+	MLX_TARGET = libmlx.a
 	CFLAGS		= -I $(INC) -Iminilibx_macos -MMD -Wall -Werror -Wextra -O3
 endif
 
@@ -63,32 +64,8 @@ DARK_GREEN =	\033[38;2;75;179;82m
 DARK_YELLOW =	\033[38;5;143m
 
 SRC_FILES	=	main.c \
-				parsing.c \
-				parsing_la.c \
-				error_manager.c \
-				utils.c \
-				utils2.c \
-				init.c \
-				parsing_cam.c \
-				parsing_lp.c \
-				draw.c \
-				hooks.c \
-				init_elem.c \
-				init_elem2.c \
-				parsing_sp.c \
-				parsing_pl.c \
-				parsing_cy.c \
-				v_perspective.c \
-				v_ray_intersections.c \
-				v_shape_intersections.c \
-				v_vectors.c \
-				v_utils.c \
-				v_sphere.c \
-				v_plane.c \
-				v_cylinder.c \
-				colors.c \
-				light.c \
-				shadow.c
+				handle_errors.c
+				
 							
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
