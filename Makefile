@@ -14,17 +14,32 @@ NAME		= miniRT
 INC			= ./inc/
 INC_HEADERS	= $(INC)minirt.h
 
-FT_INC		= $(FT)/libft.h
-
 FT			= $(INC)libft/
+FT_INC		= $(FT)/libft.h
 FT_LNK		= -L$(FT) -lft
 FT_LIB		= $(FT)libft.a
 
 SRC_DIR		= src/
 OBJ_DIR		= obj/
-#LINKFLAGS	= -L. -lmlx -framework OpenGL -framework AppKit
-LINKFLAGS  = -Lminilibx_linux -lmlx_Linux -L/usr/lib -Iminilibx_linux -lXext -lX11 -lm -lz
-CFLAGS		= -I $(INC) -Iminilibx_linux -MMD -Wall -Werror -Wextra -O3
+
+UNAME		= $(shell uname -s)
+NUMPROC		= 8
+
+ifeq ($(UNAME), Linux)
+	NUMPROC = $(shell grep -c ^processor /proc/cpuinfo)
+	LINKFLAGS  = -Lminilibx_linux -lmlx_Linux -L/usr/lib -Iminilibx_linux -lXext -lX11 -lm -lz
+	MLX_DIR	= minilibx_linux
+	MLX_TARGET = libmlx.a
+	CFLAGS		= -I $(INC) -Iminilibx_linux -MMD -Wall -Werror -Wextra -O3
+else ifeq ($(UNAME), Darwin)
+	NUMPROC = $(shell sysctl -n hw.ncpu)
+	LINKFLAGS	= -Lminilibx_macos -lmlx -framework OpenGL -framework AppKit
+	MLX_DIR = minilibx_macos
+	MLX_TARGET = libmlx.dylib
+	CFLAGS		= -I $(INC) -Iminilibx_macos -MMD -Wall -Werror -Wextra -O3
+endif
+
+
 RM			= rm -f
 
 DEL_LINE =		\033[2K
@@ -48,19 +63,44 @@ DARK_GREEN =	\033[38;2;75;179;82m
 DARK_YELLOW =	\033[38;5;143m
 
 SRC_FILES	=	main.c \
+				parsing.c \
+				parsing_la.c \
+				error_manager.c \
+				utils.c \
+				utils2.c \
+				init.c \
+				parsing_cam.c \
+				parsing_lp.c \
+				draw.c \
+				hooks.c \
+				init_elem.c \
+				init_elem2.c \
+				parsing_sp.c \
+				parsing_pl.c \
+				parsing_cy.c \
+				v_perspective.c \
+				v_ray_intersections.c \
+				v_shape_intersections.c \
+				v_vectors.c \
+				v_utils.c \
+				v_sphere.c \
+				v_plane.c \
+				v_cylinder.c \
+				colors.c \
+				light.c \
+				shadow.c
 							
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ 		=	$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 DEP			= 	$(addsuffix .d, $(basename $(OBJ)))
-#B_OBJ		=	$(OBJ)
 
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(FT_LIB)
-		@$(MAKE) -C minilibx_linux
-#		@echo "\n${ORANGE}Minilibx compilation $(DEF_COLOR)\n"
+		@$(MAKE) -C $(MLX_DIR)
+		@echo "\n${MAGENTA}Minilibx compilation complete$(DEF_COLOR)\n"
 #		@make -C ./minilibx_linux all
 #		@cp ./minilibx_linux/libmlx.a .
 		@$(CC) $(CFLAGS) $(OBJ) $(FT_LNK) $(LINKFLAGS) -o $(NAME)
@@ -72,7 +112,8 @@ $(FT_LIB):
 $(OBJ_DIR)%.o: %.c Makefile
 			@mkdir -p $(dir $@)
 			@echo "${BLUE} ◎ $(BROWN)Compiling   ${MAGENTA}→   $(CYAN)$< $(DEF_COLOR)"
-			@$(CC) $(CFLAGS) -I/usr/include -Iminilibx_linux -c $< -o $@
+			@$(CC) $(CFLAGS) -c $< -o $@
+#			@$(CC) $(CFLAGS) -I/usr/include -Iminilibx_linux -c $< -o $@
 
 -include $(DEP)
 #$(NAME):	$(OBJ)
@@ -85,7 +126,7 @@ bonus:		$(NAME)
 
 clean:
 			@$(RM) -rf $(OBJ_DIR)
-			@make -C ./minilibx_linux clean
+			@make -C $(MLX_DIR) clean
 			@make clean -C $(FT)
 			@echo "\n${BLUE} ◎ $(RED)All objects cleaned successfully ${BLUE}◎$(DEF_COLOR)\n"
 
