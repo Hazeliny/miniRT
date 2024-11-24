@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:56:02 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/22 23:19:29 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/24 22:43:24 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ typedef struct s_al
 
 typedef struct s_cam
 {
-    t_point *pov;
+    t_point *pov; // point of view
     t_point *n_vec;
-    int     fov;
+    int     fov; // field of view
 }   t_cam;
 
 typedef struct s_lit
@@ -80,7 +80,7 @@ typedef struct s_mlx
 
 typedef struct s_rt
 {
-    t_mlx   *frm;
+    t_mlx       frm;
     t_bitmap    bitmap;
     t_al    *al; //ambient light
     t_cam   *cam; //camera
