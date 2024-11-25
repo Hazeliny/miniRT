@@ -6,7 +6,7 @@
 #    By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 17:23:25 by linyao            #+#    #+#              #
-#    Updated: 2024/11/22 23:10:27 by linyao           ###   ########.fr        #
+#    Updated: 2024/11/25 16:54:19 by linyao           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ else ifeq ($(UNAME), Darwin)
 endif
 
 
-RM			= rm -f
+RM			= rm -rf
 
 DEL_LINE =		\033[2K
 ITALIC =		\033[3m
@@ -64,7 +64,10 @@ DARK_GREEN =	\033[38;2;75;179;82m
 DARK_YELLOW =	\033[38;5;143m
 
 SRC_FILES	=	main.c \
-				handle_errors.c
+				handle_errors.c \
+				render_rt.c \
+				ctrl_keys.c \
+				init.c
 				
 							
 

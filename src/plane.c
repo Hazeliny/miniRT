@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_errors.c                                    :+:      :+:    :+:   */
+/*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 22:03:44 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/25 16:56:27 by linyao           ###   ########.fr       */
+/*   Created: 2024/11/25 17:00:21 by linyao            #+#    #+#             */
+/*   Updated: 2024/11/25 23:36:18 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 
-void    terminate(char *s)
+int pl_intersect(t_intersect *i, void *elm, int f)
 {
-    if (errno == 0)
-        ft_putendl_fd(s, 2);
-    else
-        perror(s);
-    exit(1);
+    
+}
+
+void pl_update_inter(t_intersect *i, void *elm)
+{
+    
 }
