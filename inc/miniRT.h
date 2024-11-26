@@ -3,29 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
+/*   By: mpietrza <mpietrza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:56:02 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/25 21:52:14 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/26 16:09:44 by mpietrza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <math.h>
-# include <time.h>
-# include "../minilibx_macos/mlx.h"
-# include "../lib/libft/libft.h"
-# include "handle_errors.h"
-# include "objects.h"
+#include <stdio.h> //printf, perror
+#include <stdlib.h> //malloc, free, exit
+#include <unistd.h> //open, read, write, close
+#include <string.h> //strerror
+#include <fcntl.h> //open
+#include <math.h> // math like: sqrt, pow, M_PI, M_PI_2
+#include <time.h> // time	
+#include "../minilibx_linux/mlx.h" // minilibx
+#include "../libft/get_next_line.h" // get_next_line
+#include "../libft/libft.h" // libft functions
+#include "handle_errors.h"
+#include "objects.h"
+
+/*===========================		defines			==========================*/
+
+# define TRUE 1
+# define FALSE 0
 
 # define WINX 960
 # define WINY 680
+
+
 
 # define T_VALUE_MAX 1.0e6
 # define T_VALUE_MIN 0.00001
@@ -56,72 +65,77 @@
 #  define V 118
 # endif
 
+/*==========================		enumerations		======================*/
+
+
+
+
+
+/*===========================		typedefs		==========================*/
 
 typedef struct s_point
 {
-    float   x;
-    float   y;
-    float   z;
-}   t_point;
-
-typedef struct s_point   t_vec3;
+	float		x;
+	float		y;
+	float		z;
+}	t_point;
 
 typedef struct s_rgb
 {
-    int r;
-    int g;
-    int b;
+	int r;
+	int g;
+	int b;
 }   t_rgb;
 
 typedef struct s_ray
 {
-    t_point     *origin;
-    t_vec3      *direction;
+	t_point     *origin;
+	t_vec3      *direction;
 }   t_ray;
 
 typedef struct s_intersect
 {
-    t_obj   *shape;
-    t_ray   *ray;
-    t_point *pos; // coordinate of intersection point
-    t_vec3  nor; // normal vector
-    float   t; // t value, scalar along with direction from ray origin, closest intersection coefficient
-}   t_intersect;
+	t_obj   *shape;
+	t_ray   *ray;
+	t_point *pos; // coordinate of intersection point
+	t_vec3  nor; // normal vector
+	float   t; // t value, scalar along with direction from ray origin, closest intersection coefficient
+}	t_intersect;
 
 typedef struct s_vtable
 {
-    int (*is_intersect)(t_intersect *i, void *elm, int f);
-    void (*update_inter)(t_intersect *i, void *elm);
+	int (*is_intersect)(t_intersect *i, void *elm, int f);
+	void (*update_inter)(t_intersect *i, void *elm);
 }   t_vtable;
 
 typedef struct s_obj
 {
-    char            typ[2];
-    void            *elm;
-    t_vtable        *vtable;
-    struct s_obj    *next;
+	char            typ[2];
+	void            *elm;
+	t_vtable        *vtable;
+	struct s_obj    *next;
 }   t_obj;
 
 typedef struct s_al
 {
-    float   ratio;
-    t_rgb   *color;
+	float   ratio;
+	t_rgb   *color;
 }   t_al;
 
 typedef struct s_cam
 {
-    t_point *pov; // point of view
-    t_vec3  *n_vec;
-    int     fov; // field of view
-    t_bitmap    *bm;
+	t_point *pov; // point of view
+	t_vec3	*n_vec;
+	int     fov; // field of view
+	t_bitmap	*bm;
 }   t_cam;
 
 typedef struct s_lit
 {
-    t_point *l_src;
-    float   r_brt;
-    t_rgb   *color;
-    struct s_lit    *next;
+	t_point *l_src;
+	float   r_brt;
+	t_rgb   *color;
+	struct s_lit    *next;
 }   t_lit;
 
 typedef struct s_bitmap
@@ -133,11 +147,12 @@ typedef struct s_bitmap
 	char	*buffer;
 }		t_bitmap;
 
+
 typedef struct s_mlx
 {
-    void    *mlx;
-    void    *win;
-}   t_mlx;
+	void	*mlx;
+	void	*win;
+}	t_mlx;
 
 typedef struct s_rt
 {
@@ -149,22 +164,32 @@ typedef struct s_rt
     t_obj   *obj; // plane, sphere, cylinder
 }   t_rt;
 
+/*=======================		function definitions		======================*/
 
-void    parse(t_rt *rt, char **filepath);
-int     exit_program(void *para);
-int	    press_key(int key, void *para);
+void	parse(t_rt *rt, char *filepath);
+int 	exit_program(void *para);
+int		press_key(int key, void *para);
 void    init_vtable(t_obj **obj);
-int     render_rt(t_rt *rt);
-int     sp_intersect(t_intersect *i, void *elm, int f);
-void    sp_update_inter(t_intersect *i, void *elm);
-int     pl_intersect(t_intersect *i, void *elm, int f);
-void    pl_update_inter(t_intersect *i, void *elm);
-int     cy_intersect(t_intersect *i, void *elm, int f);
-void    cy_update_inter(t_intersect *i, void *elm);
+int		render_rt(t_rt *rt);
+int		sp_intersect(t_intersect *i, void *elm, int f);
+void	sp_update_inter(t_intersect *i, void *elm);
+int		pl_intersect(t_intersect *i, void *elm, int f);
+void	pl_update_inter(t_intersect *i, void *elm);
+int		cy_intersect(t_intersect *i, void *elm, int f);
+void	cy_update_inter(t_intersect *i, void *elm);
 
 /*=====================math=====================*/
 t_vec3  vec3_sub(t_point *p1, t_point *p2);
 float   vec3_dot(t_vec3 *v1, t_vec3 *v2);
 t_vec3  normalize(t_vec3 *nor);
+
+
+// parser.c
+void	free_simple(void **ptr);
+void	free_array(char **doub);
+
+// parser_decode_line.c
+int		decode_amb_lght(char *line, t_lit *al);
+
 
 #endif
