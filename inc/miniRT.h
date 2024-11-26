@@ -111,8 +111,9 @@ typedef struct s_al
 typedef struct s_cam
 {
     t_point *pov; // point of view
-    t_point *n_vec;
+    t_vec3  *n_vec;
     int     fov; // field of view
+    t_bitmap    *bm;
 }   t_cam;
 
 typedef struct s_lit
@@ -149,8 +150,9 @@ typedef struct s_rt
 }   t_rt;
 
 
-int exit_program(void *para);
-int	press_key(int key, void *para);
+void    parse(t_rt *rt, char **filepath);
+int     exit_program(void *para);
+int	    press_key(int key, void *para);
 void    init_vtable(t_obj **obj);
 int     render_rt(t_rt *rt);
 int     sp_intersect(t_intersect *i, void *elm, int f);
