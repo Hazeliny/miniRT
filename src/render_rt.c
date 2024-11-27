@@ -14,9 +14,28 @@
 
 int render_rt(t_rt *rt)
 {
-    clock_t t;
+    clock_t time;
+    float   x;
+    float   y;
+    t_intersect i;
+    t_view   view;
+
+    view = create_view(rt->cam);
+    y = 0;
+    while (y < WINY)
+    {
+        x = 0;
+        while (x < WINX)
+        {
+            i.t = T_VALUE_MAX;
+
+            x++;
+        }
+        y++;
+    }
+    
     
     mlx_put_image_to_window(rt->frm.mlx, rt->frm.win, rt->bitmap.img, 0, 0);
-    t = clock() - t;
+    time = clock() - time;
     return (0);
 }

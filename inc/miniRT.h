@@ -21,8 +21,8 @@
 #include <math.h> // math like: sqrt, pow, M_PI, M_PI_2
 #include <time.h> // time	
 #include "../minilibx_linux/mlx.h" // minilibx
-#include "../libft/get_next_line.h" // get_next_line
-#include "../libft/libft.h" // libft functions
+#include "../lib/libft/get_next_line.h" // get_next_line
+#include "../lib/libft/libft.h" // libft functions
 #include "handle_errors.h"
 #include "objects.h"
 
@@ -39,6 +39,7 @@
 # define T_VALUE_MAX 1.0e6
 # define T_VALUE_MIN 0.00001
 # define EPSILON 1e-5
+# define M_PI 3.14159265358979323846
 
 # define YES_UPDATE 1
 # define NO_UPDATE 0
@@ -104,6 +105,16 @@ typedef struct s_intersect
 	float   t; // t value, scalar along with direction from ray origin, closest intersection coefficient
 }	t_intersect;
 
+typedef struct s_view
+{
+	t_point	source;
+	t_vec3	forward;
+	t_vec3	up;
+	t_vec3	right;
+	float	h;
+	float	w;
+}	t_view;
+
 typedef struct s_vtable
 {
 	int (*is_intersect)(t_intersect *i, void *elm, int f);
@@ -126,8 +137,8 @@ typedef struct s_al
 
 typedef struct s_cam
 {
-	t_point *pov; // point of view
-	t_vec3	*n_vec;
+	t_point pov; // point of view
+	t_vec3	n_vec;
 	int     fov; // field of view
 	t_bitmap	*bm;
 }   t_cam;
@@ -179,11 +190,14 @@ int		pl_intersect(t_intersect *i, void *elm, int f);
 void	pl_update_inter(t_intersect *i, void *elm);
 int		cy_intersect(t_intersect *i, void *elm, int f);
 void	cy_update_inter(t_intersect *i, void *elm);
+t_view  create_view(t_cam *cam);
 
 /*=====================math=====================*/
 t_vec3  vec3_sub(t_point *p1, t_point *p2);
 float   vec3_dot(t_vec3 *v1, t_vec3 *v2);
 t_vec3  normalize(t_vec3 *nor);
+t_vec3  vec3_cross(t_vec3 v1, t_vec3 v2);
+t_vec3  planarize(float x, float y);
 
 
 // parser.c
