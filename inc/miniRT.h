@@ -80,6 +80,8 @@ typedef struct s_point
 	float		z;
 }	t_point;
 
+typedef struct s_point	t_vec3;
+
 typedef struct s_rgb
 {
 	int r;
