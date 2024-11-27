@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:31:30 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/27 22:40:15 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/27 23:23:16 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,16 @@ t_view  create_view(t_cam *cam)
 
 t_ray   create_ray(t_view *view, t_vec3 vec)
 {
-    
+    t_ray   ray;
+    t_vec3  a;
+    t_vec3  b;
+
+    a = vec3_mpl(view->right, vec.x * view->w);
+    a = vec3_sum(view->forward, a);
+    b = vec3_mpl(view->up, vec.y * view->h);
+    a = vec3_sum(a, b);
+    ray.origin = view->source;
+    normalize(&a);
+    ray.direction = a;
+    return (ray);
 }

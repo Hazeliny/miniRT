@@ -6,11 +6,19 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:44:08 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/27 22:48:19 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/28 00:16:30 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
+
+void    write_pixel(t_bitmap *bm, int color, int x, int y)
+{
+    char    *s;
+
+    s = bm->img + (y * bm->linesize + x * (bm->bitpixel / 8));
+    *(unsigned int *)s = color;
+}
 
 int render_rt(t_rt *rt)
 {
@@ -28,8 +36,10 @@ int render_rt(t_rt *rt)
         while (x < WINX)
         {
             i.t = T_VALUE_MAX;
-            i.ray = create_ray(&view, planarize((x * 2) / (float)WINX - 1, (y * 2) / (float)WINY - 1));
-{
+            i.ray = create_ray(&view, planarize((x * 2) \
+                    / (float)WINX - 1, (y * 2) / (float)WINY - 1));
+            if (obj_intersect(i, &(rt->obj)))
+                write_pixel();
             x++;
         }
         y++;

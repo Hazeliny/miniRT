@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:17:48 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/25 21:45:05 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/27 23:14:29 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,26 @@ t_vec3  vec3_sub(t_point *p1, t_point *p2)
     res.x = p1->x - p2->x;
     res.y = p1->y - p2->y;
     res.y = p1->z - p2->z;
+    return (res);
+}
+
+t_vec3  vec3_sum(t_vec3 v1, t_vec3 v2)
+{
+    t_vec3  res;
+
+    res.x = v1.x + v2.x;
+    res.y = v1.y + v2.y;
+    res.z = v1.z + v2.z;
+    return (res);
+}
+
+t_vec3  vec3_mpl(t_vec3 v1, float num)
+{
+    t_vec3  res;
+
+    res.x = v1.x * num;
+    res.y = v1.y * num;
+    res.z = v1.z * num;
     return (res);
 }
 

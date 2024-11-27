@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:55:03 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/25 23:04:40 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/27 23:42:14 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ static int get_tValue(t_intersect *i, float *a)
 int sp_intersect(t_intersect *i, void *elm, int f)
 {
     t_sp    *sp;
-    t_ray   *ray;
+    t_ray   ray;
     t_vec3  oc; //vector O-C
     float   a[3];
 
     sp = (t_sp *)elm;
     ray = i->ray;
-    oc = vec3_sub(ray->origin, sp->center);
-    a[0] = vec3_dot(ray->direction, ray->direction);
-    a[1] = 2.0f * vec3_dot(&oc, ray->direction);
+    oc = vec3_sub(ray.origin, sp->center);
+    a[0] = vec3_dot(&ray.direction, &ray.direction);
+    a[1] = 2.0f * vec3_dot(&oc, &ray.direction);
     a[2] = vec3_dot(&oc, &oc) - sqrtf(sp->radius);
     if (get_tValue(i, a) == 0)
         return (0);
@@ -57,9 +57,9 @@ void sp_update_inter(t_intersect *i, void *elm)
 
     sp = (t_sp *)elm;
     i->shape = (t_obj *)elm;
-    i->pos->x = i->ray->origin->x + i->t * i->ray->direction->x;
-    i->pos->y = i->ray->origin->y + i->t * i->ray->direction->y;
-    i->pos->z = i->ray->origin->z + i->t * i->ray->direction->z;
+    i->pos->x = i->ray.origin.x + i->t * i->ray.direction.x;
+    i->pos->y = i->ray.origin.y + i->t * i->ray.direction.y;
+    i->pos->z = i->ray.origin.z + i->t * i->ray.direction.z;
     i->nor = vec3_sub(i->pos, sp->center);
     normalize(&i->nor);
 }
