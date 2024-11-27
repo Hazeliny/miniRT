@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:44:08 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/25 16:57:37 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/27 22:48:19 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int render_rt(t_rt *rt)
         while (x < WINX)
         {
             i.t = T_VALUE_MAX;
-
+            i.ray = create_ray(&view, planarize((x * 2) / (float)WINX - 1, (y * 2) / (float)WINY - 1));
+{
             x++;
         }
         y++;

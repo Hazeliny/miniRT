@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpietrza <mpietrza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:56:02 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/26 16:09:44 by mpietrza         ###   ########.fr       */
+/*   Updated: 2024/11/27 22:50:05 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ void	pl_update_inter(t_intersect *i, void *elm);
 int		cy_intersect(t_intersect *i, void *elm, int f);
 void	cy_update_inter(t_intersect *i, void *elm);
 t_view  create_view(t_cam *cam);
+t_ray   create_ray(t_view *view, t_vec3 vec);
 
 /*=====================math=====================*/
 t_vec3  vec3_sub(t_point *p1, t_point *p2);
