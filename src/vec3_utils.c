@@ -6,11 +6,26 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:17:48 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/27 23:14:29 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/28 23:46:26 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
+
+float   vec3_sqr(t_vec3 v)
+{
+    return (sqr(v.x) + sqr(v.y) + sqr(v.z));
+}
+
+float   vec3_len(t_vec3 v)
+{
+    float   tmp;
+
+    tmp = vec3_sqr(v);
+    if (tmp == 0)
+        return (1);
+    return (sqrt(tmp));
+}
 
 t_vec3  vec3_sub(t_point *p1, t_point *p2)
 {

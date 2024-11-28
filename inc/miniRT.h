@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:56:02 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/27 22:50:05 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/29 00:18:13 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 
 # define T_VALUE_MAX 1.0e6
 # define T_VALUE_MIN 0.00001
-# define EPSILON 1e-5
+# define EPSILON 1e-6
 # define M_PI 3.14159265358979323846
 
 # define YES_UPDATE 1
@@ -95,6 +95,7 @@ typedef struct s_ray
 {
 	t_point     origin;
 	t_vec3      direction;
+	float		t_max;
 }   t_ray;
 
 typedef struct s_intersect
@@ -196,8 +197,9 @@ t_view  create_view(t_cam *cam);
 t_ray   create_ray(t_view *view, t_vec3 vec);
 t_rgb   light_color(t_rgb *rgb[2], t_rt *rt, t_intersect *i, t_point *p);
 t_vec3  i_pos(t_intersect *i);
-t_vec3  get_normal_inter(t_intersect *i);
-
+float   light_dot(t_intersect *i, t_lit *lit);
+bool    in_shadow(t_intersect *i, t_obj *obj, t_lit *lit);
+int check_shadow(t_intersect *i, t_obj *obj, t_ray *ray);
 
 /*=====================math=====================*/
 t_vec3  vec3_sub(t_point *p1, t_point *p2);
@@ -209,7 +211,11 @@ t_vec3  normalize(t_vec3 *nor);
 t_vec3  planarize(float x, float y);
 t_rgb   sum_color(t_rgb *rgb1, t_rgb *rgb2);
 t_rgb   density(t_rgb *rgb, float dense);
-float   light_dot(t_intersect *i, t_lit *lit);
+t_vec3  get_normal_inter(t_intersect *i);
+t_vec3  get_cynormal(t_cy *cy, t_vec3 pos);
+float   vec3_sqr(t_vec3 v);
+float   vec3_len(t_vec3 v);
+
 
 
 // parser.c
