@@ -22,17 +22,17 @@ int	press_key(int key, void *para)
     if (key == ESC)
         exit_program(rt);
     else if (key == W)
-        rt->cam->pov->y += 5;
+        rt->cam.pov.y += 5;
     else if (key == S)
-        rt->cam->pov->y -= 5;
+        rt->cam.pov.y -= 5;
     else if (key == A)
-        rt->cam->pov->x -= 5;
+        rt->cam.pov.x -= 5;
     else if (key == D)
-        rt->cam->pov->x += 5;
+        rt->cam.pov.x += 5;
     else if (key == C)
-        rt->cam->pov->z += 5;
+        rt->cam.pov.z += 5;
     else if (key == V)
-        rt->cam->pov->z -= 5;
+        rt->cam.pov.z -= 5;
     render_rt(rt);
     return (0);
 }

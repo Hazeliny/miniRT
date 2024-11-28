@@ -38,7 +38,7 @@ void    init_rt(t_rt *rt)
     rt->bitmap.img = mlx_new_image(rt->frm.mlx, WINX, WINY);
     rt->bitmap.buffer = mlx_get_data_addr(rt->bitmap.img, \
         &rt->bitmap.bitpixel, &rt->bitmap.linesize, &rt->bitmap.endian);
-    rt->cam->bm = &rt->bitmap;
+    rt->cam.bm = &rt->bitmap;
     
 }
 

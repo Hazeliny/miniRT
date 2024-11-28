@@ -28,7 +28,7 @@ int render_rt(t_rt *rt)
     t_intersect i;
     t_view   view;
 
-    view = create_view(rt->cam);
+    view = create_view(&rt->cam);
     y = 0;
     while (y < WINY)
     {

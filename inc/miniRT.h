@@ -16,6 +16,7 @@
 #include <stdio.h> //printf, perror
 #include <stdlib.h> //malloc, free, exit
 #include <unistd.h> //open, read, write, close
+#include <stdbool.h>
 #include <string.h> //strerror
 #include <fcntl.h> //open
 #include <math.h> // math like: sqrt, pow, M_PI, M_PI_2
@@ -92,14 +93,14 @@ typedef struct s_rgb
 
 typedef struct s_ray
 {
-	t_point     *origin;
-	t_vec3      *direction;
+	t_point     origin;
+	t_vec3      direction;
 }   t_ray;
 
 typedef struct s_intersect
 {
 	t_obj   *shape;
-	t_ray   *ray;
+	t_ray   ray;
 	t_point *pos; // coordinate of intersection point
 	t_vec3  nor; // normal vector
 	float   t; // t value, scalar along with direction from ray origin, closest intersection coefficient
@@ -132,7 +133,7 @@ typedef struct s_obj
 typedef struct s_al
 {
 	float   ratio;
-	t_rgb   *color;
+	t_rgb   color;
 }   t_al;
 
 typedef struct s_cam
@@ -145,9 +146,9 @@ typedef struct s_cam
 
 typedef struct s_lit
 {
-	t_point *l_src;
+	t_point l_src;
 	float   r_brt;
-	t_rgb   *color;
+	t_rgb   color;
 	struct s_lit    *next;
 }   t_lit;
 
@@ -171,9 +172,9 @@ typedef struct s_rt
 {
     t_mlx       frm;
     t_bitmap    bitmap;
-    t_al    *al; //ambient light
-    t_cam   *cam; //camera
-    t_lit   *lit; //light
+    t_al    al; //ambient light
+    t_cam   cam; //camera
+    t_lit   lit; //light
     t_obj   *obj; // plane, sphere, cylinder
 }   t_rt;
 
@@ -182,6 +183,7 @@ typedef struct s_rt
 void	parse(t_rt *rt, char *filepath);
 int 	exit_program(void *para);
 int		press_key(int key, void *para);
+t_point init_point(float x, float y, float z);
 void    init_vtable(t_obj **obj);
 int		render_rt(t_rt *rt);
 int		sp_intersect(t_intersect *i, void *elm, int f);
@@ -192,13 +194,22 @@ int		cy_intersect(t_intersect *i, void *elm, int f);
 void	cy_update_inter(t_intersect *i, void *elm);
 t_view  create_view(t_cam *cam);
 t_ray   create_ray(t_view *view, t_vec3 vec);
+t_rgb   light_color(t_rgb *rgb[2], t_rt *rt, t_intersect *i, t_point *p);
+t_vec3  i_pos(t_intersect *i);
+t_vec3  get_normal_inter(t_intersect *i);
+
 
 /*=====================math=====================*/
 t_vec3  vec3_sub(t_point *p1, t_point *p2);
+t_vec3  vec3_sum(t_vec3 v1, t_vec3 v2);
+t_vec3  vec3_mpl(t_vec3 v1, float num);
 float   vec3_dot(t_vec3 *v1, t_vec3 *v2);
-t_vec3  normalize(t_vec3 *nor);
 t_vec3  vec3_cross(t_vec3 v1, t_vec3 v2);
+t_vec3  normalize(t_vec3 *nor);
 t_vec3  planarize(float x, float y);
+t_rgb   sum_color(t_rgb *rgb1, t_rgb *rgb2);
+t_rgb   density(t_rgb *rgb, float dense);
+float   light_dot(t_intersect *i, t_lit *lit);
 
 
 // parser.c

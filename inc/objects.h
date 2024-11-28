@@ -15,11 +15,19 @@
 
 # include "miniRT.h"
 
+typedef struct s_pl
+{
+    t_point p;
+    t_vec3  n_vec;
+    t_rgb   rgb;
+    t_vec3  normal;
+}   t_pl;
+
 typedef struct s_sp
 {
     t_point *center;
     float   radius;
-    t_rgb   *rgb;
+    t_rgb   rgb;
 }   t_sp;
 
 typedef struct s_cy
@@ -30,7 +38,7 @@ typedef struct s_cy
     t_obj   *bottcap;
     float   radius;
     float   hgt;
-    t_rgb   *rgb;
-}
+    t_rgb   rgb;
+}   t_cy;
 
 #endif

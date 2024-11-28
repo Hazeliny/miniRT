@@ -27,7 +27,7 @@ void    init_intersect(t_intersect *i)
     init_rgb();
     init_ray();
     //normalize after parsing
-    normalize(i->ray->direction);
+    normalize(&i->ray.direction);
 }
 //combine with parser
 void    init_objs(t_obj **obj, char **str, int type)
@@ -36,6 +36,17 @@ void    init_objs(t_obj **obj, char **str, int type)
     init_sp();
     init_cy();
 }
+
+t_point init_point(float x, float y, float z)
+{
+    t_point p;
+
+    p.x = x;
+    p.y = y;
+    p.z = z;
+    return (p);
+}
+
 void    init_vtable(t_obj **obj)
 {
     t_obj   *cur;
