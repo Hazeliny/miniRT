@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:44:08 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/28 00:16:30 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:12:28 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ void    write_pixel(t_bitmap *bm, int color, int x, int y)
     *(unsigned int *)s = color;
 }
 
-int render_rt(t_rt *rt)
+void    ray_trace(t_rt *rt)
 {
-    clock_t time;
     float   x;
     float   y;
     t_intersect i;
@@ -39,14 +38,21 @@ int render_rt(t_rt *rt)
             i.ray = create_ray(&view, planarize((x * 2) \
                     / (float)WINX - 1, (y * 2) / (float)WINY - 1));
             if (obj_intersect(i, &(rt->obj)))
-                write_pixel();
+                write_pixel(rt->cam.bm, x, y, rgb_toi(color_intersect(rt, &i, i.shape)));
             x++;
         }
         y++;
     }
-    
-    
+}
+
+int render_rt(t_rt *rt)
+{
+    clock_t time;
+
+    time = clock();
+    ray_trace(rt);
     mlx_put_image_to_window(rt->frm.mlx, rt->frm.win, rt->bitmap.img, 0, 0);
     time = clock() - time;
+    printf("save img:\t%fs\n", ((double)time) / CLOCKS_PER_SEC);
     return (0);
 }

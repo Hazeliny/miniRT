@@ -6,26 +6,12 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:58:41 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/25 23:48:00 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:36:36 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 
-/*
-t_bitmap    *create_img(t_mlx *frm)
-{
-    t_bitmap    *bm;
-
-    bm =ft_calloc(sizeof(t_bitmap), 1);
-    if (!bm)
-        terminate(ERR_MEMO);
-    bm->img = mlx_new_image(frm->mlx, WINX, WINY);
-    bm->buffer = mlx_get_data_addr(bm->img, \
-        &bm->bitpixel, &bm->linesize, &bm->endian);
-    return (bm);
-}
-*/
 void    init_rt(t_rt *rt)
 {
     rt->frm.mlx = mlx_init();
@@ -47,6 +33,7 @@ int exit_program(void *para)
     t_rt    *rt;
 
     rt = (t_rt *)para;
+    mlx_clear_window(rt->frm.mlx, rt->frm.win);
     mlx_destroy_window(rt->frm.mlx, rt->frm.win);
 //    free(rt->frm);
 //    free(rt);
@@ -69,10 +56,6 @@ int main(int ac, char **av)
 
     if (ac == 2)
     {
-        init_metadata(&rt);
-        init_intersect();
-        init_objs();
-        // parse file here
         parse(&rt, av[1]);
         init_rt(&rt);
         if (render_rt(&rt) != 0)

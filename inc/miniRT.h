@@ -6,26 +6,28 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:56:02 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/29 00:18:13 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/30 00:12:50 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-#include <stdio.h> //printf, perror
-#include <stdlib.h> //malloc, free, exit
-#include <unistd.h> //open, read, write, close
-#include <stdbool.h>
-#include <string.h> //strerror
-#include <fcntl.h> //open
-#include <math.h> // math like: sqrt, pow, M_PI, M_PI_2
-#include <time.h> // time	
-#include "../minilibx_linux/mlx.h" // minilibx
-#include "../lib/libft/get_next_line.h" // get_next_line
-#include "../lib/libft/libft.h" // libft functions
-#include "handle_errors.h"
-#include "objects.h"
+# include <stdio.h> //printf, perror
+# include <stdlib.h> //malloc, free, exit
+# include <unistd.h> //open, read, write, close
+# include <stdbool.h>
+# include <string.h> //strerror
+# include <fcntl.h> //open
+# include <math.h> // math like: sqrt, pow, M_PI, M_PI_2
+# include <time.h> // time	
+# include "../minilibx_linux/mlx.h" // minilibx
+# include "../lib/libft/get_next_line.h" // get_next_line
+# include "../lib/libft/libft.h" // libft functions
+# include "handle_errors.h"
+# include "handle_memory.h"
+# include "objects.h"
+# include "parser.h"
 
 /*===========================		defines			==========================*/
 
@@ -67,13 +69,7 @@
 #  define V 118
 # endif
 
-/*==========================		enumerations		======================*/
-
-
-
-
-
-/*===========================		typedefs		==========================*/
+/*===========================		structures definitions		==========================*/
 
 typedef struct s_point
 {
@@ -125,7 +121,7 @@ typedef struct s_vtable
 
 typedef struct s_obj
 {
-	char            typ[2];
+	char            *typ;
 	void            *elm;
 	t_vtable        *vtable;
 	struct s_obj    *next;
@@ -181,7 +177,7 @@ typedef struct s_rt
 
 /*=======================		function definitions		======================*/
 
-void	parse(t_rt *rt, char *filepath);
+void	parse(t_rt *rt, const char *file_name);
 int 	exit_program(void *para);
 int		press_key(int key, void *para);
 t_point init_point(float x, float y, float z);
@@ -200,8 +196,15 @@ t_vec3  i_pos(t_intersect *i);
 float   light_dot(t_intersect *i, t_lit *lit);
 bool    in_shadow(t_intersect *i, t_obj *obj, t_lit *lit);
 int check_shadow(t_intersect *i, t_obj *obj, t_ray *ray);
+int rgb_toi(t_rgb rgb);
+t_rgb   color_intersect(t_rt *rt, t_intersect *i, t_obj *obj);
+t_rgb   specular(t_intersect *i, t_lit *lit);
+void    update_ray_color(t_rgb *rgb[2], t_rt *rt, t_point *p, t_rgb *ds);
+void    write_pixel(t_bitmap *bm, int color, int x, int y);
 
-/*=====================math=====================*/
+
+/*=====================			math formulas		=====================*/
+
 t_vec3  vec3_sub(t_point *p1, t_point *p2);
 t_vec3  vec3_sum(t_vec3 v1, t_vec3 v2);
 t_vec3  vec3_mpl(t_vec3 v1, float num);
@@ -209,7 +212,8 @@ float   vec3_dot(t_vec3 *v1, t_vec3 *v2);
 t_vec3  vec3_cross(t_vec3 v1, t_vec3 v2);
 t_vec3  normalize(t_vec3 *nor);
 t_vec3  planarize(float x, float y);
-t_rgb   sum_color(t_rgb *rgb1, t_rgb *rgb2);
+t_rgb   sum_color(t_rgb rgb1, t_rgb rgb2);
+t_rgb   mpl_color(t_rgb rgb1, t_rgb rgb2);
 t_rgb   density(t_rgb *rgb, float dense);
 t_vec3  get_normal_inter(t_intersect *i);
 t_vec3  get_cynormal(t_cy *cy, t_vec3 pos);
@@ -219,11 +223,17 @@ float   vec3_len(t_vec3 v);
 
 
 // parser.c
+int ft_isspace(char *s);
 void	free_simple(void **ptr);
 void	free_array(char **doub);
 
 // parser_decode_line.c
 int		decode_amb_lght(char *line, t_lit *al);
+
+/*=====================			initialization		=====================*/
+
+void    init_obj(t_obj **obj, char **str, const char *type);
+t_obj	*find_lstlast(t_obj **obj);
 
 
 #endif

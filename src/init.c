@@ -6,35 +6,32 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:09:35 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/25 23:43:40 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/30 00:10:11 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
-//combine with parser
-void    init_metadata(t_rt *rt)
+
+
+void    init_obj(t_obj **obj, char **str, const char *type)
 {
-    init_al();
-    init_cam();
-    init_lit();
-    init_obj();
-}
-//combine with parser
-void    init_intersect(t_intersect *i)
-{
-    init_point();
-    init_vec3();
-    init_rgb();
-    init_ray();
-    //normalize after parsing
-    normalize(&i->ray.direction);
-}
-//combine with parser
-void    init_objs(t_obj **obj, char **str, int type)
-{
-    init_pl();
-    init_sp();
-    init_cy();
+    t_obj   *node;
+    
+    node = ft_calloc(1, sizeof(t_obj));
+    if (!node)
+        terminate(ERR_MEMO);
+    node->typ = type;
+    node->next = NULL;
+    if (!ft_strcmp(type, "sp"))
+        node->elm = init_sp(str);
+    else if (!ft_strcmp(type, "pl"))
+        node->elm = init_pl(str);
+    else if (!ft_strcmp(type, "cy"))
+        node->elm = init_cy(str);
+    if (*obj)
+        (find_lstlast(obj))->next = node;
+    else
+        (*obj) = node;
 }
 
 t_point init_point(float x, float y, float z)

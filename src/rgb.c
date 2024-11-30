@@ -3,28 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   rgb.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: linyao <linyao@student.42barcelona.co      +#+  +:+       +#+        */
+/*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:00:56 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/28 16:00:59 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/29 15:29:53 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 
-t_rgb   sum_color(t_rgb *rgb1, t_rgb *rgb2)
+int rgb_toi(t_rgb rgb)
+{
+    int res;
+
+    res = 00 << 24 | rgb.r << 16 | rgb.g << 8 | rgb.b;
+    return (res);
+}
+
+t_rgb   sum_color(t_rgb rgb1, t_rgb rgb2)
 {
     t_rgb   res;
 
-    res.r = rgb1->r + rgb2->r;
+    res.r = rgb1.r + rgb2.r;
     if (res.r > 255)
         res.r = 255;
-    res.g = rgb1->g + rgb2->g;
+    res.g = rgb1.g + rgb2.g;
     if (res.g > 255)
         res.g = 255;
-    res.b = rgb1->b + rgb2->b;
+    res.b = rgb1.b + rgb2.b;
     if (res.b > 255)
         res.b = 255;
+    return (res);
+}
+
+t_rgb   mpl_color(t_rgb rgb1, t_rgb rgb2)
+{
+    t_rgb   res;
+
+    res.r = ((float)rgb1.r / 255) * ((float)rgb2.r / 255) * 255;
+    res.g = ((float)rgb1.g / 255) * ((float)rgb2.g / 255) * 255;
+    res.b = ((float)rgb1.b / 255) * ((float)rgb2.b / 255) * 255;
     return (res);
 }
 
