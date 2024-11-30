@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:56:02 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/30 00:12:50 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/30 22:54:46 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct s_vtable
 
 typedef struct s_obj
 {
-	char            *typ;
+	char			typ[3];
 	void            *elm;
 	t_vtable        *vtable;
 	struct s_obj    *next;
@@ -180,8 +180,6 @@ typedef struct s_rt
 void	parse(t_rt *rt, const char *file_name);
 int 	exit_program(void *para);
 int		press_key(int key, void *para);
-t_point init_point(float x, float y, float z);
-void    init_vtable(t_obj **obj);
 int		render_rt(t_rt *rt);
 int		sp_intersect(t_intersect *i, void *elm, int f);
 void	sp_update_inter(t_intersect *i, void *elm);
@@ -217,23 +215,55 @@ t_rgb   mpl_color(t_rgb rgb1, t_rgb rgb2);
 t_rgb   density(t_rgb *rgb, float dense);
 t_vec3  get_normal_inter(t_intersect *i);
 t_vec3  get_cynormal(t_cy *cy, t_vec3 pos);
+t_vec3  get_plnormal(t_vec3 vec);
 float   vec3_sqr(t_vec3 v);
 float   vec3_len(t_vec3 v);
 
 
 
 // parser.c
+void	parse(t_rt *rt, const char *file_name);
 int ft_isspace(char *s);
-void	free_simple(void **ptr);
 void	free_array(char **doub);
+int	check_filename(char *fn);
+void	read_map_file(t_rt *rt, char *str);
+void	decode_line(char *line, t_rt *rt);
+int	verify_line_elem(char *line);
+void	verify_id(char *s, char **ss, t_rt *rt);
 
-// parser_decode_line.c
-int		decode_amb_lght(char *line, t_lit *al);
 
 /*=====================			initialization		=====================*/
 
+void    init_al(t_rt *rt, char **ss);
+void    init_cam(t_rt *rt, char **ss);
+void    init_lit(t_rt *rt, char **ss);
 void    init_obj(t_obj **obj, char **str, const char *type);
+t_sp	*init_sp(char **ss);
+t_pl    *init_pl(char **ss);
+t_cy    *init_cy(char **ss);
+void    init_vtable(t_obj **obj);
+t_point init_point(float x, float y, float z);
+t_rgb   init_rgb(int r, int g, int b);
 t_obj	*find_lstlast(t_obj **obj);
+void    init_sp_center(char *s, t_sp *sp);
+void    init_sp_radius(char *s, t_sp *sp);
+void    init_sp_rgb(char *s, t_sp *sp);
+void    init_pl_p(char *s, t_pl *pl);
+void    init_pl_n_vec(char *s, t_pl *pl);
+void    init_pl_rgb(char *s, t_pl *pl);
+void    init_cy_center(char *s, t_cy *cy);
+void    init_cy_axis(char *s, t_cy *cy);
+float	init_cy_float(char *s);
+void    init_cy_rgb(char *s, t_cy *cy);
+t_obj   init_surface(t_cy *cy, int surface);
+void    check_al_ratio(char *s);
+int		init_al_rgb(char *s, t_al *al);
+void    init_cam_pov(char *s, t_cam *cam);
+void    init_cam_nvec(char *s, t_cam *cam);
+void    init_cam_fov(char *s, t_cam *cam);
+void    init_lit_lsrc(char *s, t_lit *lit);
+void    check_lit_rbrt(char *s);
+void    init_lit_color(char *s, t_lit *lit);
 
 
 #endif

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   memory_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpietrza <mpietrza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:44:42 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/25 16:10:54 by mpietrza         ###   ########.fr       */
+/*   Updated: 2024/11/30 12:54:36 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
-
+/*
 void	free_simple(void **ptr)
 {
 	if (ptr && *ptr)
@@ -33,3 +33,4 @@ void	free_array(char **arr)
 		free_simple((void **)&arr[--size]);
 	free_simple((void **)&arr);
 }
+*/

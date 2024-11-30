@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:55:03 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/28 23:02:39 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/30 17:39:20 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int sp_intersect(t_intersect *i, void *elm, int f)
 
     sp = (t_sp *)elm;
     ray = i->ray;
-    oc = vec3_sub(&ray.origin, sp->center);
+    oc = vec3_sub(&ray.origin, &sp->center);
     a[0] = vec3_dot(&ray.direction, &ray.direction);
     a[1] = 2.0f * vec3_dot(&oc, &ray.direction);
     a[2] = vec3_dot(&oc, &oc) - sqrtf(sp->radius);
@@ -60,6 +60,6 @@ void sp_update_inter(t_intersect *i, void *elm)
     i->pos->x = i->ray.origin.x + i->t * i->ray.direction.x;
     i->pos->y = i->ray.origin.y + i->t * i->ray.direction.y;
     i->pos->z = i->ray.origin.z + i->t * i->ray.direction.z;
-    i->nor = vec3_sub(i->pos, sp->center);
+    i->nor = vec3_sub(i->pos, &sp->center);
     normalize(&i->nor);
 }

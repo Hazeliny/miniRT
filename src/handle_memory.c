@@ -6,27 +6,11 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:44:42 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/29 23:24:09 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/30 13:05:06 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
-
-/**
- * @brief	Frees a simple pointer
- * 
- * @param	ptr	pointer to the pointer to free
- * @return	void
- */
-/*
-void	free_simple(void **ptr)
-{
-	if (ptr && *ptr)
-		free(*ptr);
-	*ptr = NULL;
-	return ;
-}
-*/
 
 /**
  * @brief	Frees a 2D array of strings
@@ -36,21 +20,14 @@ void	free_simple(void **ptr)
  */
 void	free_array(char **arr)
 {
-	int	size;
+	int	i;
 
-	size = 0;
+	i = 0;
 	if (!arr)
 		return ;
-	while (arr[size])
-		free(arr[size++]);
+	while (arr[i])
+		free(arr[i++]);
 	free(arr);
-/*
-	while (arr[size])
-		++size;
-	while (size > 0)
-		free_simple((void **)&arr[--size]);
-	free_simple((void **)&arr);
-*/
 }
 
 /**

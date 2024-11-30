@@ -1,0 +1,34 @@
+PARSING PART to accomplish:
+
+init_sp_elem.c   
+	void    init_sp_center(char *s, t_sp *sp)
+	void    init_sp_radius(char *s, t_sp *sp)
+	void    init_sp_rgb(char *s, t_sp *sp)
+init_pl_elem.c
+	void    init_pl_p(char *s, t_pl *pl);
+	void    init_pl_n_vec(char *s, t_pl *pl);
+	void    init_pl_rgb(char *s, t_pl *pl);
+init_cy_elem.c
+	void    init_cy_center(char *s, t_cy *cy);
+	void    init_cy_axis(char *s, t_cy *cy);
+	float	init_cy_float(char *s);
+	void    init_cy_rgb(char *s, t_cy *cy);
+
+init_al_elem.c
+	int init_al_rgb(char *s, t_al *al);
+
+init_cam_elem.c 
+	void    init_cam_pov(char *s, t_cam *cam);
+	void    init_cam_nvec(char *s, t_cam *cam);
+
+init_lit_elem.c
+void    init_lit_lsrc(char *s, t_lit *lit);
+void    init_lit_color(char *s, t_lit *lit);
+
+
+check_point(s); ------------------(in void    check_al_ratio(char *s) in init_al_elem.c)
+		------------------(in void    check_lit_rbrt(char *s) in init_lit_elem.c)
+
+check_commas(s);----------------(in int init_al_rgb(char *s, t_rt *rt) in init_al_elem.c)
+
+

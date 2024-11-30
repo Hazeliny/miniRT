@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:09:35 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/30 00:10:11 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/30 22:36:12 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void    init_obj(t_obj **obj, char **str, const char *type)
     node = ft_calloc(1, sizeof(t_obj));
     if (!node)
         terminate(ERR_MEMO);
-    node->typ = type;
+    ft_strlcpy(node->typ, type, 3);
     node->next = NULL;
     if (!ft_strcmp(type, "sp"))
         node->elm = init_sp(str);
@@ -42,6 +42,16 @@ t_point init_point(float x, float y, float z)
     p.y = y;
     p.z = z;
     return (p);
+}
+
+t_rgb   init_rgb(int r, int g, int b)
+{
+    t_rgb   rgb;
+
+    rgb.r = r;
+    rgb.g = g;
+    rgb.b = b;
+    return (rgb);
 }
 
 void    init_vtable(t_obj **obj)

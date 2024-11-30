@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:57:24 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/25 22:24:34 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/30 17:32:39 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define OBJECTS_H
 
 # include "miniRT.h"
+
+# define TOP    0
+# define BOTTOM 1
+
 
 typedef struct s_pl
 {
@@ -25,17 +29,17 @@ typedef struct s_pl
 
 typedef struct s_sp
 {
-    t_point *center;
+    t_point center;
     float   radius;
     t_rgb   rgb;
 }   t_sp;
 
 typedef struct s_cy
 {
-    t_point *center;
-    t_vec3  *axis;
-    t_obj   *topcap;
-    t_obj   *bottcap;
+    t_point center;
+    t_vec3  axis;
+    t_obj   top;
+    t_obj   bottom;
     float   radius;
     float   hgt;
     t_rgb   rgb;
