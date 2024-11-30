@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:56:02 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/30 22:54:46 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/30 23:10:24 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@
 # include "../lib/libft/get_next_line.h" // get_next_line
 # include "../lib/libft/libft.h" // libft functions
 # include "handle_errors.h"
-# include "handle_memory.h"
 # include "objects.h"
-# include "parser.h"
 
 /*===========================		defines			==========================*/
 
@@ -223,12 +221,12 @@ float   vec3_len(t_vec3 v);
 
 // parser.c
 void	parse(t_rt *rt, const char *file_name);
-int ft_isspace(char *s);
-void	free_array(char **doub);
-int	check_filename(char *fn);
+int 	ft_isspace(char *s);
+void	free_array(char **arr);
+int		check_filename(char *fn);
 void	read_map_file(t_rt *rt, char *str);
 void	decode_line(char *line, t_rt *rt);
-int	verify_line_elem(char *line);
+int		verify_line_elem(char *line);
 void	verify_id(char *s, char **ss, t_rt *rt);
 
 

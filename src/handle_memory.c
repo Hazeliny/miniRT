@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:44:42 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/30 13:05:06 by linyao           ###   ########.fr       */
+/*   Updated: 2024/11/30 23:11:51 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,4 @@ void	free_array(char **arr)
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
-}
-
-/**
- * @brief	Safe memory allocation function
- * 
- * @param	size	size of the memory to allocate
- * @return	void*	pointer to the allocated memory
- * @note	terminates the program if memory allocation fails
- */
-void	*safe_malloc(size_t size)
-{
-	void	*ptr;
-
-	ptr = malloc(size);
-	if (!ptr)
-		terminate(ERR_MEMO);
-	return (ptr);
 }
