@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:15:23 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/25 16:56:20 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 22:03:07 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	press_key(int key, void *para)
 
 	ft_printf("%d Test\n", key);
 	rt = (t_rt *)para;
-//    ctrl_angle(key, rt);
-    if (key == ESC)
+    if (key == ESC || key == Q)
         exit_program(rt);
     else if (key == W)
         rt->cam.pov.y += 5;

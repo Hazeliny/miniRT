@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 19:22:43 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/30 21:56:20 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 17:10:07 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void    init_al(t_rt *rt, char **ss)
     i = 0;
     while (ss[i])
         i++;
-    if (&(rt->al))
+    if (rt->n_al)
         terminate(ERR_AL);
     if (i != 3)
         terminate(ERR_ARGV);
@@ -30,6 +30,7 @@ void    init_al(t_rt *rt, char **ss)
     if (ft_strlen(ss[2]) > 11 || init_al_rgb(ss[2], &rt->al) != 0)
         terminate(ERR_PARA);
     rt->al.color = density(&rt->al.color, rt->al.ratio);
+    rt->n_al++;
 }
 
 void    init_cam(t_rt *rt, char **ss)
@@ -46,6 +47,7 @@ void    init_cam(t_rt *rt, char **ss)
         terminate(ERR_PARA);
     init_cam_nvec(ss[2], &rt->cam);
     init_cam_fov(ss[2], &rt->cam);
+    rt->n_cam++;
 }
 
 void    init_lit(t_rt *rt, char **ss)
@@ -65,4 +67,5 @@ void    init_lit(t_rt *rt, char **ss)
     if (ft_strlen(ss[3]) > 11)
         terminate(ERR_PARA);
     init_lit_color(ss[3], &rt->lit);
+    rt->n_lit++;
 }

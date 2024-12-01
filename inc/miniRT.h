@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:56:02 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/30 23:10:24 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 21:59:00 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "handle_errors.h"
 # include "objects.h"
 
-/*===========================		defines			==========================*/
+/*==========================		Macros			=========================*/
 
 # define TRUE 1
 # define FALSE 0
@@ -47,6 +47,7 @@
 
 # ifdef __APPLE__
 #  define ESC 53
+#  define Q 12
 #  define W 13
 #  define A 0
 #  define S 1
@@ -59,6 +60,7 @@
 #  define StructureNotifyMask (1L<<17)
 # else
 #  define ESC 65307
+#  define Q 113
 #  define W 119
 #  define A 97
 #  define S 115
@@ -67,7 +69,7 @@
 #  define V 118
 # endif
 
-/*===========================		structures definitions		==========================*/
+/*=====================		Structures definitions		====================*/
 
 typedef struct s_point
 {
@@ -114,7 +116,7 @@ typedef struct s_view
 typedef struct s_vtable
 {
 	int (*is_intersect)(t_intersect *i, void *elm, int f);
-	void (*update_inter)(t_intersect *i, void *elm);
+	int (*update_inter)(t_intersect *i, void *elm, float t_val);
 }   t_vtable;
 
 typedef struct s_obj
@@ -171,20 +173,24 @@ typedef struct s_rt
     t_cam   cam; //camera
     t_lit   lit; //light
     t_obj   *obj; // plane, sphere, cylinder
+	int		n_al;
+	int		n_cam;
+	int		n_lit;
 }   t_rt;
 
-/*=======================		function definitions		======================*/
+/*=======================		Ray tracing functions		======================*/
 
 void	parse(t_rt *rt, const char *file_name);
 int 	exit_program(void *para);
 int		press_key(int key, void *para);
 int		render_rt(t_rt *rt);
 int		sp_intersect(t_intersect *i, void *elm, int f);
-void	sp_update_inter(t_intersect *i, void *elm);
+int		sp_update_inter(t_intersect *i, void *elm, float t_val);
 int		pl_intersect(t_intersect *i, void *elm, int f);
-void	pl_update_inter(t_intersect *i, void *elm);
+int		pl_update_inter(t_intersect *i, void *elm, float t_val);
 int		cy_intersect(t_intersect *i, void *elm, int f);
-void	cy_update_inter(t_intersect *i, void *elm);
+int		cy_update_inter(t_intersect *i, void *elm, float t_val);
+int 	check_cy_topbottom(t_intersect *i, t_cy *cy, float *a);
 t_view  create_view(t_cam *cam);
 t_ray   create_ray(t_view *view, t_vec3 vec);
 t_rgb   light_color(t_rgb *rgb[2], t_rt *rt, t_intersect *i, t_point *p);
@@ -199,7 +205,7 @@ void    update_ray_color(t_rgb *rgb[2], t_rt *rt, t_point *p, t_rgb *ds);
 void    write_pixel(t_bitmap *bm, int color, int x, int y);
 
 
-/*=====================			math formulas		=====================*/
+/*=====================			Math formulas		=====================*/
 
 t_vec3  vec3_sub(t_point *p1, t_point *p2);
 t_vec3  vec3_sum(t_vec3 v1, t_vec3 v2);
@@ -216,13 +222,16 @@ t_vec3  get_cynormal(t_cy *cy, t_vec3 pos);
 t_vec3  get_plnormal(t_vec3 vec);
 float   vec3_sqr(t_vec3 v);
 float   vec3_len(t_vec3 v);
+int get_tValue(t_intersect *i, float *a);
+int solve_quadratic(t_intersect *i, t_vec3 lorig, t_cy *cy, float a[4]);
 
 
+/*=====================			Parsing functions		=====================*/
 
-// parser.c
 void	parse(t_rt *rt, const char *file_name);
 int 	ft_isspace(char *s);
-void	free_array(char **arr);
+float	ft_atof(const char *str);
+t_obj	*find_lstlast(t_obj **obj);
 int		check_filename(char *fn);
 void	read_map_file(t_rt *rt, char *str);
 void	decode_line(char *line, t_rt *rt);
@@ -230,7 +239,7 @@ int		verify_line_elem(char *line);
 void	verify_id(char *s, char **ss, t_rt *rt);
 
 
-/*=====================			initialization		=====================*/
+/*=====================			Initialization		=====================*/
 
 void    init_al(t_rt *rt, char **ss);
 void    init_cam(t_rt *rt, char **ss);
@@ -262,6 +271,16 @@ void    init_cam_fov(char *s, t_cam *cam);
 void    init_lit_lsrc(char *s, t_lit *lit);
 void    check_lit_rbrt(char *s);
 void    init_lit_color(char *s, t_lit *lit);
+
+
+/*=====================			Free		=====================*/
+
+void	free_array(char **arr);
+void	free_sp(t_sp *sp);
+void	free_pl(t_pl *pl);
+void	free_cy(t_cy *cy);
+void	free_obj(t_obj *obj);
+void	free_rt(t_rt *rt);
 
 
 #endif

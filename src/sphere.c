@@ -6,20 +6,20 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:55:03 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/30 17:39:20 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 21:53:21 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 
-static int get_tValue(t_intersect *i, float *a)
+int get_tValue(t_intersect *i, float *a)
 {
     float   discriminant;
     float   t[2];
 
     discriminant = sqrtf(a[1]) - 4.0f * a[0] * a[2];
     if (discriminant < 0)
-        return (0);
+        return (-1);
     t[0] = (-a[1] - sqrtf(discriminant)) / (2.0f * a[0]);
     t[1] = (-a[1] + sqrtf(discriminant)) / (2.0f * a[0]);
     if (t[0] > T_VALUE_MIN && t[0] < i->t && t[0] < t[1])
@@ -27,8 +27,10 @@ static int get_tValue(t_intersect *i, float *a)
     else if (t[1] > T_VALUE_MIN && t[1] < i->t)
         i->t = t[1];
     else
-        return (0);
-    return (1);
+        return (-1);
+    a[0] = t[0];
+    a[1] = t[1];
+    return (0);
 }
 
 int sp_intersect(t_intersect *i, void *elm, int f)
@@ -37,6 +39,7 @@ int sp_intersect(t_intersect *i, void *elm, int f)
     t_ray   ray;
     t_vec3  oc; //vector O-C
     float   a[3];
+    float   t_val;
 
     sp = (t_sp *)elm;
     ray = i->ray;
@@ -44,17 +47,19 @@ int sp_intersect(t_intersect *i, void *elm, int f)
     a[0] = vec3_dot(&ray.direction, &ray.direction);
     a[1] = 2.0f * vec3_dot(&oc, &ray.direction);
     a[2] = vec3_dot(&oc, &oc) - sqrtf(sp->radius);
-    if (get_tValue(i, a) == 0)
+    if (get_tValue(i, a) == -1)
         return (0);
+    t_val = 0.0f;
     if (f == YES_UPDATE)
-        sp_update_inter(i, elm);
+        sp_update_inter(i, elm, t_val);
     return (1);
 }
 
-void sp_update_inter(t_intersect *i, void *elm)
+int sp_update_inter(t_intersect *i, void *elm, float t_val)
 {
     t_sp    *sp;
 
+    (void)t_val;
     sp = (t_sp *)elm;
     i->shape = (t_obj *)elm;
     i->pos->x = i->ray.origin.x + i->t * i->ray.direction.x;
@@ -62,4 +67,5 @@ void sp_update_inter(t_intersect *i, void *elm)
     i->pos->z = i->ray.origin.z + i->t * i->ray.direction.z;
     i->nor = vec3_sub(i->pos, &sp->center);
     normalize(&i->nor);
+    return (1);
 }

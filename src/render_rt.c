@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:44:08 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/29 16:12:28 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 17:19:43 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void    ray_trace(t_rt *rt)
             i.ray = create_ray(&view, planarize((x * 2) \
                     / (float)WINX - 1, (y * 2) / (float)WINY - 1));
             if (obj_intersect(i, &(rt->obj)))
-                write_pixel(rt->cam.bm, x, y, rgb_toi(color_intersect(rt, &i, i.shape)));
+                write_pixel(rt->cam.bm, x, y, \
+                        rgb_toi(color_intersect(rt, &i, i.shape)));
             x++;
         }
         y++;

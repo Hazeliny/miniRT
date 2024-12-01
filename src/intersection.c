@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 23:31:02 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/28 21:49:48 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 20:58:32 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,20 @@ t_vec3  get_normal_inter(t_intersect *i)
 
     if (i->shape->typ[0] == 'p' && i->shape->typ[1] == 'l')
     {
-        pl = (t_pl *)(i->shape);
+        pl = (t_pl *)(i->shape->elm);
         return (pl->normal);
     }
     else if (i->shape->typ[0] == 's' && i->shape->typ[1] == 'p')
     {
         sp = (t_sp *)(i->shape);
         tmp = i_pos(i);
-        tmp = vec3_sub(&tmp, sp->center);
-        return (normalize(&tmp));
+        tmp = vec3_sub(&tmp, &sp->center);
+        normalize(&tmp);
+        return (tmp);
     }
     else
     {
-        cy = (t_cy *)(i->shape);
+        cy = (t_cy *)(i->shape->elm);
         return (get_cynormal(cy, i_pos(i)));
     }
 }
@@ -55,6 +56,8 @@ bool    obj_intersect(t_intersect *i, t_obj **obj)
     f = false;
     while (cur)
     {
+        if (!ft_strcmp(cur->typ, "pl") || !ft_strcmp(cur->typ, "sp"))
+            
         if (cur->vtable->is_intersect(i, cur, YES_UPDATE))
             f = true;
         cur = cur->next;

@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:59:33 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/30 22:44:02 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 17:42:48 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	verify_id(char *s, char **ss, t_rt *rt)
  * 
  * @param	line	pointer to the line to decode
  * @param	rt		pointer to the main structure
- * @return	int		error code
  */
 void	decode_line(char *line, t_rt *rt)
 {
@@ -68,6 +67,9 @@ void	decode_line(char *line, t_rt *rt)
 	
 	if (!line || !ft_isspace(line))
 		return (0);
+	rt->n_al = 0;
+	rt->n_cam = 0;
+	rt->n_lit = 0;
 	verify_line_elem(line);
 	arr = ft_split(line, ' ');
 	if (!arr)
@@ -116,11 +118,12 @@ void	read_map_file(t_rt *rt, char *str)
  * 
  * @param	rt			pointer to the main structure
  * @param	file_name	name of the file to parse
- * @return	int			error code
  */
 void	parse(t_rt *rt, const char *file_name)
 {
 	if (check_filename(file_name) != 0)
 		terminate(ERR_FILENAME);
 	read_map_file(rt, file_name);
+	if (!rt->n_al || !rt->n_cam || !rt->n_lit)
+		terminate(ERR_ACL);
 }

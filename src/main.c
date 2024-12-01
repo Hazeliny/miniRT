@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:58:41 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/29 16:36:36 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 19:01:42 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,10 @@ void    init_rt(t_rt *rt)
     if (!rt->frm.win)
         terminate(ERR_MEMO);
     init_vtable(&(rt->obj));
-//    rt->cam->bm = create_img(&rt->frm);
-//    rt->bitmap = *(rt->cam->bm);
     rt->bitmap.img = mlx_new_image(rt->frm.mlx, WINX, WINY);
     rt->bitmap.buffer = mlx_get_data_addr(rt->bitmap.img, \
         &rt->bitmap.bitpixel, &rt->bitmap.linesize, &rt->bitmap.endian);
     rt->cam.bm = &rt->bitmap;
-    
 }
 
 int exit_program(void *para)
@@ -34,9 +31,14 @@ int exit_program(void *para)
 
     rt = (t_rt *)para;
     mlx_clear_window(rt->frm.mlx, rt->frm.win);
-    mlx_destroy_window(rt->frm.mlx, rt->frm.win);
-//    free(rt->frm);
-//    free(rt);
+    if (rt->frm.win)
+        mlx_destroy_window(rt->frm.mlx, rt->frm.win);
+    if (rt->bitmap.img)
+        mlx_destroy_image(rt->frm.mlx, rt->bitmap.img);
+    if (rt->frm.mlx)
+        free(rt->frm.mlx);
+    rt->frm.mlx = NULL;
+    free_rt(rt);
     exit (0);
 }
 
@@ -62,6 +64,7 @@ int main(int ac, char **av)
             terminate(ERR_RENDER);
         control_mlx(&rt);
         mlx_loop(rt.frm.mlx);
+        free_rt(&rt);
         // free series of memories
     }
     else

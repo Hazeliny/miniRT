@@ -6,53 +6,111 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:02:02 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/30 18:03:52 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 21:39:54 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 
-t_obj   init_surface(t_cy *cy, int surface)
+int solve_quadratic(t_intersect *i, t_vec3 lorig, t_cy *cy, float a[4])
 {
-    t_obj   new;
-    t_pl    pl;
+    float   proj[2];
 
-    pl.p = cy->center;
-    if (surface)
-        pl.normal = vec3_mpl(cy->axis, -1);
-    else
+    proj[0] = vec3_dot(&i->ray.direction, &cy->axis);
+    proj[1] = vec3_dot(&cy->axis, &lorig);
+    a[0] = vec3_sqr(i->ray.direction) - sqr(proj[0]);
+    a[1] = 2 * (vec3_dot(&i->ray.direction, &lorig), - proj[0] * proj[1]);
+    a[2] = vec3_sqr(lorig) - sqr(vec3_dot(&lorig, &cy->axis)) - \
+                                                    sqr(cy->radius);
+    if (get_tValue(i, a) == -1)
+        return (-1);
+    a[3] = vec3_dot(&i->ray.direction, &cy->axis) * i->t + \
+                                            vec3_dot(&lorig, &cy->axis);
+    return (0);
+}
+
+int check_cy_topbottom(t_intersect *i, t_cy *cy, float *a)
+{
+    t_intersect inter;
+    int         num;
+
+    num = 0;
+    inter = *i;
+    inter.t = i->t;
+    inter.ray = i->ray;
+    num += cy->top.vtable->is_intersect(&inter, &cy->top, YES_UPDATE);
+    num += cy->bottom.vtable->is_intersect(&inter, &cy->bottom, YES_UPDATE);
+    if (inter.t > a[0] && inter.t > a[1])
+        return (0);
+    i->t = inter.t;
+    i->shape = inter.shape;
+    return (num);
+}
+
+static int  cy_judge_inter(t_intersect *i, void *elm, float t_val)
+{
+    t_cy    *cy;
+    t_vec3  lorig;
+    float   a[4];
+
+    cy = (t_cy *)elm;
+    lorig = vec3_sub(&cy->center, &i->ray.origin);
+    if (solve_quadratic(i, lorig, cy, a) == -1)
+        return (0);
+    if (a[3] <= 0 || a[3] >= cy->hgt)
     {
-        pl.p = vec3_sum(vec3_mpl(cy->axis, cy->hgt), cy->center);
-        pl.normal = cy->axis;
+        a[2] = vec3_dot(&i->ray.direction, &cy->axis) * a[0] + \
+                vec3_dot(&lorig, &cy->axis);
+        a[3] = vec3_dot(&i->ray.direction, &cy->axis) * a[1] + \
+                vec3_dot(&lorig, &cy->axis);
+        i->t = t_val;
+        if ((a[2] < 0 && a[3] < 0) || (a[2] > cy->hgt && a[3] > cy->hgt))
+            return (0);
+        return (check_cy_topbottom(i, cy, a));
     }
-    pl.rgb = cy->rgb;
-    new.elm = &pl;
-    ft_strlcpy(new.typ, "pl", 3);
-    new.vtable->is_intersect = &pl_intersect;
-    new.vtable->update_inter = &pl_update_inter;
-    return (new);
+    return (1);
 }
 
 int cy_intersect(t_intersect *i, void *elm, int f)
 {
-    
+    float   t_val;
+
+    t_val = i->t;
+    if (f == NO_UPDATE)
+    {
+        if (cy_judge_inter(i, elm, t_val) != 0)
+            return (1);
+    }
+    else
+    {
+        if (cy_update_inter(i, elm, t_val) != 0)
+            return (1);
+    }
+    return (0);
 }
 
-void cy_update_inter(t_intersect *i, void *elm)
+int cy_update_inter(t_intersect *i, void *elm, float t_val)
 {
-    
-}
+    t_cy    *cy;
+    t_vec3  lorig;
+    float   a[4];
 
-t_vec3  get_cynormal(t_cy *cy, t_vec3 pos)
-{
-    t_vec3  vec;
-    t_vec3  proj;
-    float   proj_len;
-
-    vec = vec3_sub(&pos, &cy->center);
-    proj_len = vec3_dot(&cy->axis, &vec);
-    proj = vec3_mpl(cy->axis, proj_len);
-    vec = vec3_sub(&vec, &proj);
-    normalize(&vec);
-    return (vec);
+//    t_val = i->t;
+    cy = (t_cy *)elm;
+    lorig = vec3_sub(&cy->center, &i->ray.origin);
+    if (solve_quadratic(i, lorig, cy, a) == -1)
+        return (0);
+    a[3] = vec3_dot(&i->ray.direction, &cy->axis) * a[0] + \
+            vec3_dot(&lorig, &cy->axis);
+    if (a[3] <= 0 || a[3] >= cy->hgt)
+    {
+        a[2] = vec3_dot(&i->ray.direction, &cy->axis) * a[1] + \
+            vec3_dot(&lorig, &cy->axis);
+        i->t = t_val;
+        if ((a[2] < 0 && a[3] < 0) || (a[2] > cy->hgt && a[3] > cy->hgt))
+            return (0);
+        return (check_cy_topbottom(i, cy, a));
+    }
+    i->shape = (t_obj *)elm;
+    return (1);
 }

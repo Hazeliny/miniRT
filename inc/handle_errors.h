@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 22:10:38 by linyao            #+#    #+#             */
-/*   Updated: 2024/11/30 19:34:01 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 17:12:26 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@
 # define ERR_ID         "Error: incorrect object identifier"
 # define ERR_PARA       "Error: incorrect parameter"
 # define ERR_AL			"Error: incorrect number of ambient light"
-# define ERR_CAM		"Error: camera decoding failed"
-# define ERR_LIT		"Error: light decoding failed"
-# define ERR_SPH		"Error: sphere decoding failed"
-# define ERR_PLN		"Error: plane decoding failed"
-# define ERR_CYL		"Error: cylinder decoding failed"
+# define ERR_ACL        "Error: al, cam, or light cannot be empty"
 
 /*==========================		enumerations		======================*/
 typedef enum e_err

@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 14:40:27 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/11/30 00:17:05 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/01 19:23:58 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,16 @@ t_obj	*find_lstlast(t_obj **obj)
 	return (last);
 }
 
-size_t	ft_strcpy(char *dst, const char *src)
+void	free_array(char **arr)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (src[i] != '\0' && dst[i] != '\0')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (i);
+	if (!arr)
+		return ;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
 }
 
 static float	ft_atof_decimal(const char *str, float *decimal)
@@ -63,12 +61,6 @@ static float	ft_atof_decimal(const char *str, float *decimal)
 	return (*decimal);
 }
 
-/**
- * @brief	Converts a string to a float
- * 
- * @param	str	pointer to the string to convert
- * @return	float	converted float
- */
 float	ft_atof(const char *str)
 {
 	float	result;
