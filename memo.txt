@@ -1,5 +1,6 @@
 PARSING PART to accomplish: 
-(Detailed illustrations and demands have been written as comments in these .c files. BTW, pls don't change existing code and comments)
+(Detailed illustrations and demands have been written as comments in these .c files. BTW, 
+pls don't change existing code and comments)
 
 init_sp_elem.c   
 	void    init_sp_center(char *s, t_sp *sp)
@@ -33,6 +34,10 @@ check_point(s); ------------------(in void    check_al_ratio(char *s) in init_al
 check_commas(s);----------------(in int init_al_rgb(char *s, t_rt *rt) in init_al_elem.c)
 
 
-Our next tasks: make clear whether we should realize the rotation and translation of the images by mouse or by keyboards, and whether we should realize the zoom-in and zoom-out of windows??? If yes, how to realize them?
-debug && test && fix the possible bugs or leaks or segmentation fault or bus error etc... 
+Our next tasks: 
+
+1. make clear whether we should realize the rotation and translation of the images by mouse or by keyboards, 
+and whether we should realize the zoom-in and zoom-out of windows??? If yes, how to realize them?
+
+2.debug && test && fix the possible bugs or leaks or segmentation fault or bus error etc... 
 
