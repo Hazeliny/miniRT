@@ -1,4 +1,5 @@
-PARSING PART to accomplish (Detailed illustrations and demands have been written as comments in these .c files. BTW, pls don't change existing code and comments)
+PARSING PART to accomplish: 
+(Detailed illustrations and demands have been written as comments in these .c files. BTW, pls don't change existing code and comments)
 
 init_sp_elem.c   
 	void    init_sp_center(char *s, t_sp *sp)
