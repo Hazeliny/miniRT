@@ -24,7 +24,8 @@ SRC = ft_atoi.c  ft_memchr.c ft_split.c ft_strncmp.c \
       ft_isprint.c ft_putnbr_fd.c ft_strlen.c \
 	ft_strcmp.c ft_getinx.c ft_realloc.c \
       ft_itoa.c ft_putstr_fd.c ft_strmapi.c ft_printf.c ft_convert.c ft_convert2.c \
-		get_next_line.c get_next_line_utils.c
+		get_next_line.c get_next_line_utils.c \
+	ft_atof.c
 
 BONUS_FILES = ft_lstlast.c ft_lstadd_front.c ft_lstadd_back.c \
               ft_lstnew.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c \

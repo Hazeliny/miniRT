@@ -73,5 +73,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_getinx(const char *str, int c);
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+double ft_atof(const char *str);
 
 #endif

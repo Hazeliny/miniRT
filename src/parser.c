@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:59:33 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/12/01 17:42:48 by linyao           ###   ########.fr       */
+/*   Updated: 2024/12/03 21:23:29 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ void	verify_id(char *s, char **ss, t_rt *rt)
 		terminate(ERR_ID);
 }
 
-/**
- * @brief	Decodes the line and calls the appropriate function
- * 
- * @param	line	pointer to the line to decode
- * @param	rt		pointer to the main structure
- */
 void	decode_line(char *line, t_rt *rt)
 {
 	char	**arr;
@@ -113,12 +107,6 @@ void	read_map_file(t_rt *rt, char *str)
 	close(fd);
 }
 
-/**
- * @brief	Parses the file
- * 
- * @param	rt			pointer to the main structure
- * @param	file_name	name of the file to parse
- */
 void	parse(t_rt *rt, const char *file_name)
 {
 	if (check_filename(file_name) != 0)

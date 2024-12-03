@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/22 14:40:27 by mpietrza          #+#    #+#             */
-/*   Updated: 2024/12/01 19:23:58 by linyao           ###   ########.fr       */
+/*   Created: 2024/11/22 14:40:27 by linyao            #+#    #+#             */
+/*   Updated: 2024/12/03 23:00:22 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,41 +50,3 @@ void	free_array(char **arr)
 		free(arr[i++]);
 	free(arr);
 }
-
-static float	ft_atof_decimal(const char *str, float *decimal)
-{
-	while (*str >= '0' && *str <= '9')
-	{
-		*decimal = *decimal * 10 + *str - '0';
-		str++;
-	}
-	return (*decimal);
-}
-
-float	ft_atof(const char *str)
-{
-	float	result;
-	float	decimal;
-	int		sign;
-
-	result = 0;
-	decimal = 0;
-	sign = 1;
-	if (*str == '-')
-	{
-		sign = -1;
-		str++;
-	}
-	while (*str >= '0' && *str <= '9')
-	{
-		result = result * 10 + *str - '0';
-		str++;
-	}
-	if (*str == '.')
-	{
-		str++;
-		decimal = ft_atof_decimal(str, &decimal);
-	}
-	return (sign * (result + decimal / pow(10, ft_strlen(str))));
-}
-
