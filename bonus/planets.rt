@@ -1,0 +1,23 @@
+A 0.3 255,255,255
+C 13.5,-5,50 0,0,-1 15
+L 50,50,20 0.9 255,230,240
+
+L -10,60,30 0.9 200,100,100
+
+sp 0,0,0 8 0,0,0
+bm 0.3 imgs/plutobump1k.xpm
+sp 9,0,0 8 0,0,0
+bm 0.3 imgs/mercurybump.xpm
+sp 18,0,0 8 0,0,0
+bm 0.3 imgs/marsbump1k.xpm
+sp 27,0,0 8 0,0,0
+bm 0.3 imgs/moonbump1k.xpm
+
+sp 0,-10,0 8 0,0,0
+bm 0.3 imgs/SoftballBump.xpm
+sp 9,-10,0 8 0,0,0
+bm 0.3 imgs/TennisBallBump.xpm
+sp 18,-10,0 8 0,0,0
+bm 0.3 imgs/venusbump.xpm
+sp 27,-10,0 8 0,0,0
+bm 0.3 imgs/earthbump1k.xpm
