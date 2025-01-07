@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 16:49:01 by linyao            #+#    #+#             */
-/*   Updated: 2025/01/06 16:12:28 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/08 00:25:49 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_rgb   light_color(t_rgb (*rgb)[2], t_rt *rt, t_intersect *i, t_point *p)
 
     apply_checkerboard(i, rgb);
     apply_bump(i);
-    apply_texture(i);
+    apply_texture(i, rgb);
     lit = rt->lit;
     while (lit)
     {
@@ -76,7 +76,10 @@ t_rgb   light_color(t_rgb (*rgb)[2], t_rt *rt, t_intersect *i, t_point *p)
         else
         {
             p->z = 1;
-            (*rgb)[1] = sum_color(sum_color(mpl_color(ds, (*rgb)[0]), \
+            if (i->shape->has_texture && i->shape->texture_f > 0.0f)
+                (*rgb)[1] = matting(i, lit, ds, rgb);
+            else
+                (*rgb)[1] = sum_color(sum_color(mpl_color(ds, (*rgb)[0]), \
                                 specular(i, lit)), (*rgb)[1]);
         }
         lit = lit->next;

@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:31:30 by linyao            #+#    #+#             */
-/*   Updated: 2024/12/27 14:46:46 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/07 21:13:01 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ t_view  create_view(t_cam *cam)
 {
     t_view  view;
 
-    view.source = cam->pov; //Sets the source of the view to the camera's pov (Point of View). This is the position of the camera in 3D space.
-    normalize(&cam->n_vec);//Normalizes the camera's n_vec ("normal vector" representing the camera's forward direction) to ensure it has a unit length. This is important for consistent calculations involving directions.
-    view.forward = cam->n_vec; //Sets the forward vector of the view to the normalized camera's direction vector. This vector points in the direction the camera is facing.
-    view.right = vec3_cross(view.forward, planarize(0, 1)); //to Compute the right vector of the view using a cross product, the result is a vector that points to the right of the camera, perpendicular to the forward vector
-    view.up = vec3_cross(view.forward, view.right); //The up vector is perpendicular to both the forward and right vectors, ensuring a complete orthogonal basis for the camera's orientation in 3D space.
-    view.h = tan(cam->fov * M_PI / 180);//to Calculate the height of the view frustum in normalized units, cam->fov is the field of view (in degrees), which is converted to radians (* M_PI / 180), The tangent of half the FOV angle determines the vertical size of the view at a unit distance
-    view.w = view.h * ((float) WINX / (float) WINY);//Calculates the width of the view frustum based on the height and the aspect ratio of the viewport. This ensures the view frustum has the correct proportions to avoid distortion.
+    view.source = cam->pov;
+    normalize(&cam->n_vec);
+    view.forward = cam->n_vec;
+    view.right = vec3_cross(view.forward, planarize(0, 1));
+    view.up = vec3_cross(view.forward, view.right);
+    view.h = tan(cam->fov * M_PI / 180);
+    view.w = view.h * ((float) WINX / (float) WINY);
     return (view);
 }
 

@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 13:12:31 by linyao            #+#    #+#             */
-/*   Updated: 2024/12/29 20:01:11 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/08 00:22:11 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void    base_rgb_pl(t_rt *rt, t_pl *pl, t_rgb rgb[2])
 {
-    rgb[0] = sum_color(rt->al.color, pl->rgb);//to combine ambient light (rt->al.color) with the object's color (obj->rgb)
-    rgb[1] = density(&pl->rgb, 0.0f);//to initialize a zero-dense color for later calculations
+    rgb[0] = sum_color(rt->al.color, pl->rgb);
+    rgb[1] = density(&pl->rgb, 0.0f);
 }
 
 static void    base_rgb_sp(t_rt *rt, t_sp *sp, t_rgb rgb[2])
@@ -36,6 +36,7 @@ static void    base_rgb_cn(t_rt *rt, t_cn *cn, t_rgb rgb[2])
     rgb[1] = density(&cn->rgb, 0.0f);
 }
 
+//t_rgb   color_intersect(t_rt *rt, t_intersect *i, t_obj *obj, t_view *view)
 t_rgb   color_intersect(t_rt *rt, t_intersect *i, t_obj *obj)
 {
     t_rgb   rgb[2];
@@ -47,8 +48,8 @@ t_rgb   color_intersect(t_rt *rt, t_intersect *i, t_obj *obj)
     else if (obj->typ[0] == 's' && obj->typ[1] == 'p')
     {
         base_rgb_sp(rt, (t_sp *)obj->elm, rgb);
-        if (i->shape->has_texture)
-            i->shape->h = compute_half_vector(&i, rt);
+//        if (i->shape->has_texture)
+//            i->shape->h = compute_half_vector(i, view);
     }
     else if (obj->typ[0] == 'c' && obj->typ[1] == 'y')
         base_rgb_cy(rt, (t_cy *)obj->elm, rgb);

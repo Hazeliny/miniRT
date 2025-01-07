@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:56:02 by linyao            #+#    #+#             */
-/*   Updated: 2025/01/06 13:54:27 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/08 00:25:02 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,7 @@ int		cy_update_inter(t_intersect *i, t_obj *obj, float t_val);
 int 	check_cy_topbottom(t_intersect *i, t_cy *cy, float *a);
 int		cn_intersect(t_intersect *i, t_obj *obj, int f);
 int		cn_update_inter(t_intersect *i, t_obj *obj, float t_val);
-int		i_cn_apex(t_intersect *i, t_cn *cn, t_ray *ray);
+//int		i_cn_apex(t_intersect *i, t_cn *cn, t_ray *ray);
 int		i_cn_bottom(t_intersect *i, t_cn *cn, float *a);
 //int		i_cn_bottom(t_intersect *i, t_cn *cn, t_ray *ray);
 t_view  create_view(t_cam *cam);
@@ -270,6 +270,7 @@ float   light_dot(t_intersect *i, t_lit *lit);
 bool    in_shadow(t_intersect *i, t_obj *obj, t_lit *lit);
 int check_shadow(t_intersect *i, t_obj *obj, t_ray *ray);
 int rgb_toi(t_rgb rgb);
+//t_rgb   color_intersect(t_rt *rt, t_intersect *i, t_obj *obj, t_view *view);
 t_rgb   color_intersect(t_rt *rt, t_intersect *i, t_obj *obj);
 t_rgb   specular(t_intersect *i, t_lit *lit);
 void    update_ray_color(t_rgb (*rgb)[2], t_rt *rt, t_point *p, t_rgb *ds);
@@ -370,6 +371,7 @@ void    init_cb_scale(char *s, t_pl *pl);
 /*=====================			Bump map		=====================*/
 
 void init_bump(t_obj **obj, char **ss);
+int validate_xpmfile(char *path);
 void create_obj_norm(t_rt *rt);
 void apply_bump(t_intersect *i);
 void bump_on_sp(t_intersect *i, t_bitmap *bm, int grey_scale[3][2]);
@@ -379,7 +381,11 @@ t_vec3 pertub_bump_nor(t_obj *obj, t_vec3 nor, float pu, float pv);
 /*=====================			Texture map		=====================*/
 
 void	init_texture(t_obj **obj, char **ss);
-t_vec3 compute_half_vector(t_intersect *i, t_rt *rt);
+void	apply_texture(t_intersect *i, t_rgb (*rgb)[2]);
+//t_vec3 compute_half_vector(t_intersect *i, t_view *view);
+t_rgb get_pixelcolor(t_bitmap *bm, float u, float v);
+t_vec3  get_normal_from_texture(t_bitmap *bm, float uv[2]);
+t_rgb   matting(t_intersect *i, t_lit *lit, t_rgb ds, t_rgb (*rgb)[2]);
 
 
 /*=====================			Control		=====================*/

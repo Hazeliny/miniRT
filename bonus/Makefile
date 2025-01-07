@@ -6,7 +6,7 @@
 #    By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 17:23:25 by linyao            #+#    #+#              #
-#    Updated: 2025/01/06 13:36:42 by linyao           ###   ########.fr        #
+#    Updated: 2025/01/07 23:04:23 by linyao           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,17 +68,19 @@ DARK_YELLOW =	\033[38;5;143m
 SRC_FILES	=	main_bonus.c \
 				handle_cleanings_bonus.c handle_memory_bonus.c \
 				render_rt_bonus.c ctrl_keys_bonus.c utils1_ctrl_bonus.c\
-				init_bonus.c init1_bonus.c init2_bonus.c parser_bonus.c \
+				init_bonus.c init1_bonus.c init2_bonus.c init3_bonus.c \
+				init4_bonus.c parser_bonus.c \
 				check_bonus.c utils_parse_bonus.c\
 				init_pl_elem_bonus.c init_sp_elem_bonus.c init_cy_elem_bonus.c \
 				init_cn_elem_bonus.c \
 				init_al_elem_bonus.c init_cam_elem_bonus.c init_lit_elem_bonus.c \
 				view_bonus.c intersection_bonus.c \
 				plane_bonus.c sphere_bonus.c cylinder_bonus.c cylinder1_bonus.c \
-				cone_bonus.c init3_bonus.c\
+				cone_bonus.c \
 				ray_bonus.c light_bonus.c shadow_bonus.c rgb_bonus.c \
 				utils_bonus.c vec3_utils_bonus.c vec3_utils1_bonus.c \
-				checkerboard_bonus.c bump_bonus.c bump1_bonus.c
+				checkerboard_bonus.c bump_bonus.c bump1_bonus.c \
+				texture_bonus.c texture1_bonus.c matting_bonus.c
 
 				
 							
