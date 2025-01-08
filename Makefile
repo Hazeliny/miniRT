@@ -6,39 +6,41 @@
 #    By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/21 17:23:25 by linyao            #+#    #+#              #
-#    Updated: 2024/12/25 19:17:15 by linyao           ###   ########.fr        #
+#    Updated: 2025/01/09 00:11:21 by linyao           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= miniRT
+NAME_BONUS	= miniRT_bonus
 INC			= ./inc/
 LIB			= ./lib/
-INC_HEADERS	= $(INC)minirt.h
+INC_HEADERS	= $(INC)miniRT_bonus.h
 
 FT			= $(LIB)libft/
 FT_INC		= $(FT)/libft.h
 FT_LNK		= -L$(FT) -lft
 FT_LIB		= $(FT)libft.a
 
-SRC_DIR		= src/
-OBJ_DIR		= obj/
+SRC_DIR		= ./src/
+OBJ_DIR		= ./obj/
+OBJ_BONUS_DIR	= ./obj_bonus/
 
 UNAME		= $(shell uname -s)
 NUMPROC		= 8
 
 ifeq ($(UNAME), Linux)
 	NUMPROC = $(shell grep -c ^processor /proc/cpuinfo)
-	LINKFLAGS  = -Lminilibx_linux -lmlx_Linux -L/usr/lib -Iminilibx_linux -lXext -lX11 -lm -lz
-	MLX_DIR	= minilibx_linux
+	LINKFLAGS  = -L./minilibx_linux -lmlx_Linux -L/usr/lib -I./minilibx_linux -lXext -lX11 -lm -lz
+	MLX_DIR	= ./minilibx_linux
 	MLX_TARGET = libmlx.a
-	CFLAGS		= -I $(INC) -Iminilibx_linux -MMD -fsanitize=address -g -Wall -Werror -Wextra -O3
+	CFLAGS		= -I $(INC) -I./minilibx_linux -MMD -fsanitize=address -g -Wall -Werror -Wextra -O3
 	LDFLAGS += -fsanitize=address
 else ifeq ($(UNAME), Darwin)
 	NUMPROC = $(shell sysctl -n hw.ncpu)
-	LINKFLAGS	= -Lminilibx_macos -lmlx -framework OpenGL -framework AppKit
-	MLX_DIR = minilibx_macos
+	LINKFLAGS	= -L./minilibx_macos -lmlx -framework OpenGL -framework AppKit
+	MLX_DIR = ./minilibx_macos
 	MLX_TARGET = libmlx.a
-	CFLAGS		= -I $(INC) -Iminilibx_macos -MMD -fsanitize=address -g -Wall -Werror -Wextra -O3
+	CFLAGS		= -I $(INC) -I./minilibx_macos -MMD -fsanitize=address -g -Wall -Werror -Wextra -O3
 	LDFLAGS += -fsanitize=address
 endif
 
@@ -65,62 +67,76 @@ MID_GRAY =		\033[38;5;245m
 DARK_GREEN =	\033[38;2;75;179;82m
 DARK_YELLOW =	\033[38;5;143m
 
-SRC_FILES	=	main.c \
-				handle_cleanings.c handle_memory.c \
-				render_rt.c ctrl_keys.c utils1_ctrl.c\
-				init.c init1.c init2.c parser.c \
-				check.c utils_parse.c\
-				init_pl_elem.c init_sp_elem.c init_cy_elem.c \
-				init_al_elem.c init_cam_elem.c init_lit_elem.c \
-				view.c intersection.c \
-				plane.c sphere.c cylinder.c cylinder1.c \
-				ray.c light.c shadow.c rgb.c \
-				utils.c vec3_utils.c vec3_utils1.c \
+SRC_FILES	=	main_bonus.c \
+				handle_cleanings_bonus.c handle_memory_bonus.c \
+				render_rt_bonus.c ctrl_keys_bonus.c utils1_ctrl_bonus.c\
+				init_bonus.c init1_bonus.c init2_bonus.c init3_bonus.c \
+				init4_bonus.c parser_bonus.c \
+				check_bonus.c utils_parse_bonus.c\
+				init_pl_elem_bonus.c init_sp_elem_bonus.c init_cy_elem_bonus.c \
+				init_cn_elem_bonus.c \
+				init_al_elem_bonus.c init_cam_elem_bonus.c init_lit_elem_bonus.c \
+				view_bonus.c intersection_bonus.c \
+				plane_bonus.c sphere_bonus.c cylinder_bonus.c cylinder1_bonus.c \
+				cone_bonus.c \
+				ray_bonus.c light_bonus.c shadow_bonus.c rgb_bonus.c \
+				utils_bonus.c vec3_utils_bonus.c vec3_utils1_bonus.c \
+				checkerboard_bonus.c bump_bonus.c bump1_bonus.c \
+				texture_bonus.c texture1_bonus.c matting_bonus.c
 
 				
-							
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
-OBJ 		=	$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
-DEP			= 	$(addsuffix .d, $(basename $(OBJ)))
+OBJ 		=	$(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
+OBJ_BONUS 	=	$(patsubst $(SRC_DIR)%.c, $(OBJ_BONUS_DIR)%.o, $(SRC))
+DEP			= 	$(OBJ:.o=.d)
+DEP_BONUS	= 	$(OBJ_BONUS:.o=.d)
 
 
 all: $(NAME)
 
+bonus: $(NAME_BONUS)
+
 $(NAME): $(OBJ) $(FT_LIB)
 		@$(MAKE) -C $(MLX_DIR) > /dev/null 2>&1
 		@echo "\n${MAGENTA}Minilibx compilation complete$(DEF_COLOR)\n"
-#		@make -C ./minilibx_linux all
-#		@cp ./minilibx_linux/libmlx.a .
-		@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(FT_LNK) $(LINKFLAGS) -o $(NAME)
+#		@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(FT_LNK) $(LINKFLAGS) -o $(NAME)
+		@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(FT_LNK) $(LINKFLAGS) -o $@
 		@echo "$(GREEN)\n${NAME} created ✓$(DEF_COLOR)\n"
+
+$(NAME_BONUS): $(OBJ_BONUS) $(FT_LIB)
+		@$(MAKE) -C $(MLX_DIR) > /dev/null 2>&1
+		@echo "\n${MAGENTA}Minilibx compilation complete$(DEF_COLOR)\n"
+		@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ_BONUS) $(FT_LNK) $(LINKFLAGS) -o $@
+		@echo "$(GREEN)\n${NAME_BONUS} created ✓$(DEF_COLOR)\n"
+
 
 $(FT_LIB):
 		@$(MAKE) -C $(FT)
 
-$(OBJ_DIR)%.o: %.c Makefile
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC_HEADERS) Makefile
 			@mkdir -p $(dir $@)
 			@echo "${BLUE} ◎ $(BROWN)Compiling   ${MAGENTA}→   $(CYAN)$< $(DEF_COLOR)"
 			@$(CC) $(CFLAGS) $(LDFLAGS) -c $< -o $@
-#			@$(CC) $(CFLAGS) -I/usr/include -Iminilibx_linux -c $< -o $@
+
+$(OBJ_BONUS_DIR)%.o: $(SRC_DIR)%.c $(INC_HEADERS) Makefile
+			@mkdir -p $(dir $@)
+			@echo "${BLUE} ◎ $(BROWN)Compiling   ${MAGENTA}→   $(CYAN)$< $(DEF_COLOR)"
+			@$(CC) $(CFLAGS) $(LDFLAGS) -c $< -o $@
+
 
 -include $(DEP)
-#$(NAME):	$(OBJ)
-#			@$(CC) $(CFLAGS) $(OBJ) $(FT_LNK) $(LINKFLAGS) -o $(NAME)
-#			@echo "$(GREEN)\nCreated ${NAME} ✓$(DEF_COLOR)\n"
+-include $(DEP_BONUS)
 
-#-include $(DEP)
-
-bonus:		$(NAME)
 
 clean:
-			@$(RM) -rf $(OBJ_DIR)
+			@$(RM) -rf $(OBJ_DIR) $(OBJ_BONUS_DIR)
 			@make -C $(MLX_DIR) clean
 			@make clean -C $(FT)
 			@echo "\n${BLUE} ◎ $(RED)All objects cleaned successfully ${BLUE}◎$(DEF_COLOR)\n"
 
 fclean:		clean
-			@$(RM) -f $(NAME)
+			@$(RM) -f $(NAME) $(NAME_BONUS)
 			@$(RM) -f lib*.a
 			@make fclean -C $(FT)
 			@echo "\n${BLUE} ◎ $(RED)All objects and executable cleaned successfully ${BLUE}◎$(DEF_COLOR)\n"
@@ -129,4 +145,4 @@ fclean:		clean
 re:			fclean all
 
 
-.PHONY:		all clean fclean re norm
+.PHONY:		all clean fclean re bonus
