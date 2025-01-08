@@ -102,12 +102,13 @@ void	free_obj(t_obj **objs)
 			free_cn((t_cn *)obj->elm);
 		if (obj->vtable)
 			free(obj->vtable);
-		if (obj->has_bump && obj->bump.path)
+		if (obj->bump.path)
 			free(obj->bump.path);
-		if (obj->has_texture && obj->texture.path)
+		if (obj->texture.path)
 			free(obj->texture.path);
 		obj->vtable = NULL;
 		obj->bump.path = NULL;
+		obj->texture.path = NULL;
 		obj->has_bump = false;
 		obj->has_texture = false;
 		free(obj);

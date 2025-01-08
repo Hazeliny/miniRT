@@ -10,8 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= miniRT
-NAME_BONUS	= miniRT_bonus
+NAME		= miniRT_bonus
 INC			= ./inc/
 LIB			= ../lib/
 INC_HEADERS	= $(INC)miniRT_bonus.h
@@ -29,10 +28,10 @@ NUMPROC		= 8
 
 ifeq ($(UNAME), Linux)
 	NUMPROC = $(shell grep -c ^processor /proc/cpuinfo)
-	LINKFLAGS  = ./minilibx_linux/libmlx.a -L/usr/lib -lXext -lX11 -lm -lz
-	MLX_DIR	= ./minilibx_linux
+	LINKFLAGS  = -L../minilibx_linux -lmlx_Linux -L/usr/lib -I../minilibx_linux -lXext -lX11 -lm -lz
+	MLX_DIR	= ../minilibx_linux
 	MLX_TARGET = libmlx.a
-	CFLAGS		= -I $(INC) -MMD -fsanitize=address -g -Wall -Werror -Wextra -O3
+	CFLAGS		= -I $(INC) -I../minilibx_linux -MMD -fsanitize=address -g -Wall -Werror -Wextra -O3
 	LDFLAGS += -fsanitize=address
 else ifeq ($(UNAME), Darwin)
 	NUMPROC = $(shell sysctl -n hw.ncpu)
@@ -93,22 +92,13 @@ DEP			= 	$(OBJ:.o=.d)
 
 all: $(NAME)
 
-bonus: $(NAME_BONUS)
-
 $(NAME): $(OBJ) $(FT_LIB)
 		@$(MAKE) -C $(MLX_DIR) > /dev/null 2>&1
 		@echo "\n${MAGENTA}Minilibx compilation complete$(DEF_COLOR)\n"
 #		@make -C ./minilibx_linux all
 #		@cp ./minilibx_linux/libmlx.a .
-#		@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(FT_LNK) $(LINKFLAGS) -o $(NAME)
-		@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(FT_LNK) $(LINKFLAGS) -o $@
+		@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(FT_LNK) $(LINKFLAGS) -o $(NAME)
 		@echo "$(GREEN)\n${NAME} created ✓$(DEF_COLOR)\n"
-
-$(NAME_BONUS): $(OBJ) $(FT_LIB)
-		@$(MAKE) -C $(MLX_DIR) > /dev/null 2>&1
-		@echo "\n${MAGENTA}Minilibx compilation complete$(DEF_COLOR)\n"
-		@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) $(FT_LNK) $(LINKFLAGS) -o $@
-		@echo "$(GREEN)\n${NAME_BONUS} created ✓$(DEF_COLOR)\n"
 
 $(FT_LIB):
 		@$(MAKE) -C $(FT)
@@ -126,6 +116,8 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC_HEADERS) Makefile
 
 #-include $(DEP)
 
+bonus:		$(NAME)
+
 clean:
 			@$(RM) -rf $(OBJ_DIR)
 			@make -C $(MLX_DIR) clean
@@ -133,7 +125,7 @@ clean:
 			@echo "\n${BLUE} ◎ $(RED)All objects cleaned successfully ${BLUE}◎$(DEF_COLOR)\n"
 
 fclean:		clean
-			@$(RM) -f $(NAME) $(NAME_BONUS)
+			@$(RM) -f $(NAME)
 			@$(RM) -f lib*.a
 			@make fclean -C $(FT)
 			@echo "\n${BLUE} ◎ $(RED)All objects and executable cleaned successfully ${BLUE}◎$(DEF_COLOR)\n"
@@ -142,4 +134,4 @@ fclean:		clean
 re:			fclean all
 
 
-.PHONY:		all clean fclean re bonus
+.PHONY:		all clean fclean re norm

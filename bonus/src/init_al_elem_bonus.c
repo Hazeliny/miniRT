@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/miniRT_bonus.h"
-//hecho
+
 void    check_al_ratio(char *s)
 {
     int i;
@@ -29,13 +29,7 @@ void    check_al_ratio(char *s)
         i++;
     }
 }
-//hecho
-//    arr = ft_split("255,255,255", ',');
-// s is a one-dimensional array, presenting the al-rgb eg: 255,255,255
-// firstly looping check if exists ".", once it does, throw error. i.e. check if the 3 elements in the array are integers
-// then check errors in parameters such as commas&digits&non-digits in al-rgb
-// split x, y, z with ',' then put them into a two-dimensional array (char **arr). Attention: free it at last!
-// count the number of the 2D array's elements, if it isnot 3(eg: 255,255,255,255), throw error
+
 int init_al_rgb(char *s, t_al *al)
 {
     char    **arr;

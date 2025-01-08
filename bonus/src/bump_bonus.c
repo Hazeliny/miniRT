@@ -12,11 +12,11 @@
 
 #include "../inc/miniRT_bonus.h"
 
-void handle_img(t_rt *rt, t_obj *o)
+void    handle_img(t_rt *rt, t_obj *o)
 {
     if (o->has_bump && !o->bump.img)
     {
-        o->bump.img = mlx_xpm_file_to_image(&rt->frm, \
+        o->bump.img = mlx_xpm_file_to_image(rt->frm.mlx, \
             o->bump.path, &o->bump.width, &o->bump.height);
         if (!o->bump.img)
             o->has_bump = false;
@@ -26,7 +26,7 @@ void handle_img(t_rt *rt, t_obj *o)
     }
     if (o->has_texture && !o->texture.img)
     {
-        o->texture.img = mlx_xpm_file_to_image(&rt->frm, \
+        o->texture.img = mlx_xpm_file_to_image(rt->frm.mlx, \
             o->texture.path, &o->texture.width, &o->texture.height);
         if (!o->texture.img)
             o->has_texture = false;

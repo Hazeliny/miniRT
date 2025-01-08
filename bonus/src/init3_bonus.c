@@ -61,6 +61,8 @@ void init_bump(t_obj **obj, char **ss)
             init_bumpf(ss[1], cur);
         if (validate_xpmfile(ss[2]) == -1)
             terminate("incorrect bump xpmfile..\n");
+        if (cur->bump.path)
+            free(cur->bump.path);
         cur->bump.path = ft_strdup(ss[2]);
     }
 }
