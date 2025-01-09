@@ -4,4 +4,4 @@ L -20,20,100 0.7 255,230,240
 
 sp 0,0,5 32 200,200,200
 bm 0.3 imgs/earthbump1k.xpm
-tx 0.1 imgs/jupitermap.xpm
+tx 0.0 imgs/jupitermap.xpm

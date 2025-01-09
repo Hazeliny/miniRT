@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 22:55:57 by linyao            #+#    #+#             */
-/*   Updated: 2025/01/09 00:17:53 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/09 09:53:41 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ t_rgb   matting(t_intersect *i, t_lit *lit, t_rgb ds, t_rgb (*rgb)[2])
     rough = i->shape->texture_f;
     n = i->nor;
     l = vec3_mpl(i->ray.direction, -1);
-//    v = vec3_mpl(i->ray.direction, -1);
-    v = vec3_mpl(i->shape->h, -1);
-    h = vec3_sum(v, l);
+    v = vec3_mpl(i->ray.direction, -1);
+//    v = vec3_mpl(i->shape->h, -1);
+//    h = vec3_sum(v, l);
+    h = i->shape->h;
     normalize(&h);
     d = ggx_distribution(&n, &h, rough);
     g = compute_smith_geometry(i, rough);
