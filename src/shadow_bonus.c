@@ -6,46 +6,44 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 23:16:24 by linyao            #+#    #+#             */
-/*   Updated: 2024/12/27 12:29:35 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/09 17:52:17 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT_bonus.h"
 
-//Tests shadow intersection for specific object types (planes, spheres, cylinders)
-int check_shadow(t_intersect *i, t_obj *obj, t_ray *ray)
+int	check_shadow(t_intersect *i, t_obj *obj, t_ray *ray)
 {
-    t_intersect ins;
-    t_obj   *cur;
+	t_intersect	ins;
+	t_obj		*cur;
 
-    ins = *i;
-    ins.ray = *ray;
-    ins.t = ray->t_max;
-    cur = obj;
-    while (cur)
-    {
-        if (cur->vtable->is_intersect(&ins, cur, NO_UPDATE))
-            return (1);
-        cur = cur->next;
-    }
-    return (0);
+	ins = *i;
+	ins.ray = *ray;
+	ins.t = ray->t_max;
+	cur = obj;
+	while (cur)
+	{
+		if (cur->vtable->is_intersect(&ins, cur, NO_UPDATE))
+			return (1);
+		cur = cur->next;
+	}
+	return (0);
 }
 
-//Checks whether a point is in shadow by casting a ray toward the light source and testing for intersections
-bool    in_shadow(t_intersect *i, t_obj *obj, t_lit *lit)
+bool	in_shadow(t_intersect *i, t_obj *obj, t_lit *lit)
 {
-    t_vec3  v;
-    t_ray   ray;
-    t_vec3  offset;
+	t_vec3	v;
+	t_ray	ray;
+	t_vec3	offset;
 
-    ray.origin = i_pos(i);
-    v = vec3_sub(&lit->l_src, &ray.origin);
-    ray.t_max = vec3_len(v);
-    ray.direction = v;
-    normalize(&(ray.direction));
-    offset = vec3_mpl(ray.direction, 1.1);
-    ray.origin = vec3_sum(ray.origin, offset);
-    if (check_shadow(i, obj, &ray))
-        return (true);
-    return (false);
+	ray.origin = i_pos(i);
+	v = vec3_sub(&lit->l_src, &ray.origin);
+	ray.t_max = vec3_len(v);
+	ray.direction = v;
+	normalize(&(ray.direction));
+	offset = vec3_mpl(ray.direction, 1.1);
+	ray.origin = vec3_sum(ray.origin, offset);
+	if (check_shadow(i, obj, &ray))
+		return (true);
+	return (false);
 }

@@ -6,19 +6,19 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 22:03:44 by linyao            #+#    #+#             */
-/*   Updated: 2024/12/27 12:25:32 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/09 18:24:41 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT_bonus.h"
 
-void    terminate(char *s)
+void	terminate(char *s)
 {
-    if (errno == 0)
-        ft_putendl_fd(s, 2);
-    else
-        perror(s);
-    exit(1);
+	if (errno == 0)
+		ft_putendl_fd(s, 2);
+	else
+		perror(s);
+	exit(1);
 }
 
 void	free_sp(t_sp *sp)

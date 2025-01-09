@@ -22,7 +22,7 @@ static int	solve_cn_quadratic(t_intersect *i, t_vec3 oc, t_cn *cn, float a[4])
 	a[1] = 2.0f * (vec3_dot(&i->ray.direction, &oc) - (1 + k) * \
 			vec3_dot(&i->ray.direction, &cn->axis) * vec3_dot(&oc, &cn->axis));
 	a[2] = vec3_dot(&oc, &oc) - (1 + k) * sqr(vec3_dot(&oc, &cn->axis));
-	if (get_tValue(i, a) == -1)
+	if (get_t(i, a) == -1)
 		return (-1);
 	a[3] = vec3_dot(&i->ray.direction, &cn->axis) * i->t \
 		+ vec3_dot(&oc, &cn->axis);

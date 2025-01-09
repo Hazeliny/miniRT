@@ -6,79 +6,22 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:44:42 by linyao            #+#    #+#             */
-/*   Updated: 2025/01/06 13:57:24 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/09 18:34:36 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT_bonus.h"
 
-void	free_cy_topbottom(t_obj *tb)
+static void	free_bm_tx(t_obj *obj)
 {
-	if (!tb)
-		return ;
-	if (tb->elm)
-	{
-		free(tb->elm);
-		tb->elm = NULL;
-	}
-	if (tb->vtable)
-	{
-		free(tb->vtable);
-		tb->vtable = NULL;
-	}
-	free(tb);
-	tb = NULL;
-}
-
-void	free_cy(t_cy *cy)
-{
-	if (cy)
-	{
-		if (cy->top)
-		{
-			free_cy_topbottom(cy->top);
-			cy->top = NULL;
-		}
-		if (cy->bottom)
-		{
-			free_cy_topbottom(cy->bottom);
-			cy->bottom = NULL;
-		}
-		free(cy);
-		cy = NULL;
-	}
-}
-
-void	free_cn_bottom(t_obj *b)
-{
-	if (!b)
-		return ;
-	if (b->elm)
-	{
-		free(b->elm);
-		b->elm = NULL;
-	}
-	if (b->vtable)
-	{
-		free(b->vtable);
-		b->vtable = NULL;
-	}
-	free(b);
-	b = NULL;
-}
-
-void	free_cn(t_cn *cn)
-{
-	if (cn)
-	{
-		if (cn->bottom)
-		{
-			free_cn_bottom(cn->bottom);
-			cn->bottom = NULL;
-		}
-		free(cn);
-		cn = NULL;
-	}
+	if (obj->bump.path)
+		free(obj->bump.path);
+	if (obj->texture.path)
+		free(obj->texture.path);
+	obj->bump.path = NULL;
+	obj->texture.path = NULL;
+	obj->has_bump = false;
+	obj->has_texture = false;
 }
 
 void	free_obj(t_obj **objs)
@@ -102,15 +45,8 @@ void	free_obj(t_obj **objs)
 			free_cn((t_cn *)obj->elm);
 		if (obj->vtable)
 			free(obj->vtable);
-		if (obj->bump.path)
-			free(obj->bump.path);
-		if (obj->texture.path)
-			free(obj->texture.path);
+		free_bm_tx(obj);
 		obj->vtable = NULL;
-		obj->bump.path = NULL;
-		obj->texture.path = NULL;
-		obj->has_bump = false;
-		obj->has_texture = false;
 		free(obj);
 		obj = tmp;
 	}
@@ -118,7 +54,7 @@ void	free_obj(t_obj **objs)
 }
 
 void	free_rt(t_rt *rt)
-{	
+{
 	if (rt)
 	{
 		if (rt->obj)

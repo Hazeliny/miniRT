@@ -33,8 +33,9 @@ ifeq ($(UNAME), Linux)
 	LINKFLAGS  = -L./minilibx_linux -lmlx_Linux -L/usr/lib -I./minilibx_linux -lXext -lX11 -lm -lz
 	MLX_DIR	= ./minilibx_linux
 	MLX_TARGET = libmlx.a
-	CFLAGS		= -I $(INC) -I./minilibx_linux -MMD -fsanitize=address -g -Wall -Werror -Wextra -O3
-	LDFLAGS += -fsanitize=address
+	CFLAGS		= -I $(INC) -I./minilibx_linux -MMD -Wall -Werror -Wextra -O3
+#	CFLAGS		= -I $(INC) -I./minilibx_linux -MMD -fsanitize=address -g -Wall -Werror -Wextra -O3
+#	LDFLAGS += -fsanitize=address
 else ifeq ($(UNAME), Darwin)
 	NUMPROC = $(shell sysctl -n hw.ncpu)
 	LINKFLAGS	= -L./minilibx_macos -lmlx -framework OpenGL -framework AppKit
@@ -68,10 +69,10 @@ DARK_GREEN =	\033[38;2;75;179;82m
 DARK_YELLOW =	\033[38;5;143m
 
 SRC_FILES	=	main_bonus.c \
-				handle_cleanings_bonus.c handle_memory_bonus.c \
+				handle_cleanings_bonus.c handle_memory_bonus.c handle_memory1_bonus.c \
 				render_rt_bonus.c ctrl_keys_bonus.c utils1_ctrl_bonus.c\
 				init_bonus.c init1_bonus.c init2_bonus.c init3_bonus.c \
-				init4_bonus.c parser_bonus.c \
+				init4_bonus.c parser_bonus.c parser1_bonus.c \
 				check_bonus.c utils_parse_bonus.c\
 				init_pl_elem_bonus.c init_sp_elem_bonus.c init_cy_elem_bonus.c \
 				init_cn_elem_bonus.c \

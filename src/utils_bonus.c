@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 14:40:27 by linyao            #+#    #+#             */
-/*   Updated: 2024/12/18 23:21:29 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/09 16:45:10 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT_bonus.h"
 
-int ft_isspace_str(char *s)
+int	ft_isspace_str(char *s)
 {
-    int	i;
+	int	i;
 
 	i = 0;
 	while (s[i])

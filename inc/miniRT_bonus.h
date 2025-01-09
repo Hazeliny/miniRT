@@ -297,7 +297,7 @@ t_vec3	get_spnormal(t_sp *sp, t_vec3 vec);
 t_vec3  get_cnnormal(t_cn *cn, t_vec3 vec);
 float   vec3_sqr(t_vec3 v);
 float   vec3_len(t_vec3 v);
-int get_tValue(t_intersect *i, float *a);
+int get_t(t_intersect *i, float *a);
 int solve_quadratic(t_intersect *i, t_vec3 lorig, t_cy *cy, float a[4]);
 float   sqr(float n);
 
