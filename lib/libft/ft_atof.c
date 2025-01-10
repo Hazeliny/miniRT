@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:27:47 by linyao            #+#    #+#             */
-/*   Updated: 2024/12/03 22:59:38 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/10 13:43:47 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,70 +17,85 @@
 #include <stdio.h>
 #include "libft.h"
 
-static int skip_whitespace_and_sign(const char **str) {
-    int sign;
-
-    sign = 1;
-    while (isspace(**str))
-        (*str)++;
-    if (**str == '+' || **str == '-') {
-        sign = (**str == '-') ? -1 : 1;
-        (*str)++;
-    }
-    return (sign);
-}
 /*
-static double parse_integer_part(const char **str)
+double	ft_atof(const char *str)
 {
-    double result;
+	double	result;
 
-    result = 0.0;
-    while (isdigit(**str)) {
-        result = result * 10.0 + (**str - '0');
-        (*str)++;
-    }
-    return result;
+	result = 0.0;
+	if (!str)
+		return (0.0);
+	result = atof(str);
+	return (result);
 }
 */
-static double parse_fractional_part(const char **str) {
-    double fraction;
-    double divisor;
+
+static int skip_whitespace_and_sign(const char **str)
+{
+	int	sign;
+
+	sign = 1;
+	while (isspace(**str))
+		(*str)++;
+	if (**str == '+' || **str == '-')
+	{
+		if (**str == '-') 
+			sign = -1;
+		else
+			sign = 1;
+        (*str)++;
+    }
+	return (sign);
+}
+
+static double	parse_fractional_part(const char **str)
+{
+	double	fraction;
+	double	divisor;
 
     fraction = 0.0;
     divisor = 1.0;
-    if (**str == '.') {
-        (*str)++;
-        while (ft_isdigit(**str)) {
-            fraction = fraction * 10.0 + (**str - '0');
-            divisor *= 10.0;
-            (*str)++;
-        }
-    }
-    return (fraction / divisor);
+    if (**str == '.')
+	{
+		(*str)++;
+		while (ft_isdigit(**str))
+		{
+			fraction = fraction * 10.0 + (**str - '0');
+			divisor *= 10.0;
+			(*str)++;
+		}
+	}
+	return (fraction / divisor);
 }
 
-static int parse_exponent(const char **str)
+static int	parse_exponent(const char **str)
 {
-    int exp_sign;
-    int exponent;
+	int	exp_sign;
+	int	exponent;
 
-    exp_sign = 1;
-    exponent = 0;
-    if (**str == 'e' || **str == 'E') {
-        (*str)++;
-        if (**str == '+' || **str == '-') {
-            exp_sign = (**str == '-') ? -1 : 1;
-            (*str)++;
+	exp_sign = 1;
+	exponent = 0;
+	if (**str == 'e' || **str == 'E')
+	{
+		(*str)++;
+		if (**str == '+' || **str == '-')
+		{
+			if (**str == '-')
+				exp_sign = -1;
+			else
+				exp_sign = 1;
+			(*str)++;
         }
-        while (ft_isdigit(**str)) {
-            exponent = exponent * 10 + (**str - '0');
-            (*str)++;
-        }
-    }
-    return (exp_sign * exponent);
+		while (ft_isdigit(**str))
+		{
+			exponent = exponent * 10 + (**str - '0');
+			(*str)++;
+		}
+	}
+	return (exp_sign * exponent);
 }
 
-static double handle_overflow(double result, int sign)
+static double	handle_overflow(double result, int sign)
 {
 	if (result > DBL_MAX)
 	{
@@ -94,26 +109,26 @@ static double handle_overflow(double result, int sign)
 	return (result);
 }
 
-double ft_atof(const char *str)
+double	ft_atof(const char *str)
 {
-    double result;
-    int sign;
-    int exponent;
+	double	result;
+	int		sign;
+	int		exponent;
 
-    result = 0.0;
-    if (!str)
-        return 0.0;
-    sign = skip_whitespace_and_sign(&str);
-    while (ft_isdigit(*str))
-    {
-        result = result * 10.0 + (*str - '0');
-        str++;
-    }
-    result += parse_fractional_part(&str);
-    exponent = parse_exponent(&str);
-    result *= pow(10.0, exponent);
-    result = handle_overflow(result, sign);
-    return (result * sign);
+	result = 0.0;
+	if (!str)
+		return (0.0);
+	sign = skip_whitespace_and_sign(&str);
+	while (ft_isdigit(*str))
+	{
+		result = result * 10.0 + (*str - '0');
+		str++;
+	}
+	result += parse_fractional_part(&str);
+	exponent = parse_exponent(&str);
+	result *= pow(10.0, exponent);
+	result = handle_overflow(result, sign);
+	return (result * sign);
 }
 /*
 int main()
@@ -124,7 +139,7 @@ int main()
     printf("standard: %f\n", atof("-123.456"));
     printf("%f\n", ft_atof("1.23e3"));         // 科学计数法
     printf("standard: %f\n", atof("1.23e3"));
-    printf("%f\n", ft_atof("-1.23E-3"));       // 带负指数 -0.000001  standard: -0.001230
+    printf("%f\n", ft_atof("-1.23E-3"));//-0.000001  standard: -0.001230
     printf("standard: %f\n", atof("-1.23E-3"));
     printf("%f\n", ft_atof("  +0.00123  "));   // 空格和正号
     printf("standard: %f\n", atof("  +0.00123  ")); 

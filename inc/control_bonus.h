@@ -6,12 +6,12 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 16:37:51 by linyao            #+#    #+#             */
-/*   Updated: 2024/12/26 16:25:01 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/10 12:42:34 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTROL_H
-# define CONTROL_H
+#ifndef CONTROL_BONUS_H
+# define CONTROL_BONUS_H
 
 // mouse buttons
 # define M_LEFT 1
@@ -34,10 +34,8 @@
 #  define KEY_RIGHT	124
 #  define KEY_DOWN	125
 #  define KEY_UP	126
-#  define KeyPress 2
-#  define KeyPressMask (1L<<0)
-#  define DestroyNotify 17
-#  define StructureNotifyMask (1L<<17)
+#  define KEYPRESS 2
+#  define DESTROYNOTIFY 17
 # else
 #  define M_PI 3.14159265358979323846
 #  define KEY_ESC	65307

@@ -6,12 +6,12 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 22:10:38 by linyao            #+#    #+#             */
-/*   Updated: 2024/12/26 16:24:56 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/10 12:39:03 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HANDLE_ERRORS_H
-# define HANDLE_ERRORS_H
+#ifndef HANDLE_ERRORS_BONUS_H
+# define HANDLE_ERRORS_BONUS_H
 
 # include <errno.h>
 
@@ -28,8 +28,8 @@
 # define ERR_AL			"Error: incorrect number of ambient light"
 # define ERR_ACL        "Error: al, cam, or light cannot be empty"
 
-/*=======================		function definitions		======================*/
-// handle_errors.c
-void    terminate(char *s);
+/*==================		function definitions		=================*/
+
+void	terminate(char *s);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: shurtado <shurtado@student.42barcelona.fr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:43:11 by linyao            #+#    #+#             */
-/*   Updated: 2024/10/08 11:27:57 by shurtado         ###   ########.fr       */
+/*   Updated: 2025/01/10 13:44:55 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_getinx(const char *str, int c);
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
-double ft_atof(const char *str);
+double	ft_atof(const char *str);
 
 #endif
