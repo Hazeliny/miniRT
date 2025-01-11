@@ -6,7 +6,7 @@
 /*   By: linyao <linyao@student.42barcelona.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:27:47 by linyao            #+#    #+#             */
-/*   Updated: 2025/01/10 13:43:47 by linyao           ###   ########.fr       */
+/*   Updated: 2025/01/11 12:02:23 by linyao           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,6 @@
 #include <float.h>
 #include <stdio.h>
 #include "libft.h"
-
-/*
-double	ft_atof(const char *str)
-{
-	double	result;
-
-	result = 0.0;
-	if (!str)
-		return (0.0);
-	result = atof(str);
-	return (result);
-}
-*/
 
 static int skip_whitespace_and_sign(const char **str)
 {
