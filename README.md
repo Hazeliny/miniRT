@@ -1,6 +1,6 @@
 # miniRT
 
-This ray tracing project, written in **C** and based on the norminette specification of 42 school, is the grandest one in 42 school. It renders realistic scene effects on the screen by calculating the intersection data between rays and objects. The program uses a virtual function table to simulate C++'s polymorphism, allowing different objects to call their corresponding intersection functions to compute the interaction between rays and various object types.
+This ray tracing project, written in **C** and based on the norminette specification of 42 school, is the biggest one in 42 school. It renders realistic scene effects on the screen by calculating the intersection data between rays and objects. The program uses a virtual function table to simulate C++'s polymorphism, allowing different objects to call their corresponding intersection functions to compute the interaction between rays and various object types.
 
 A general ray equation is used, so when processing cylinders and cones, it is necessary to calculate the value of the coefficient t in the ray equation. Since a ray typically intersects an object at two points, the closest intersection point to the light source must be determined. Information about this closest intersection point, such as the object's shape, type, and normal vector, is stored in a structure.
 
