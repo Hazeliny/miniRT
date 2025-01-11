@@ -11,8 +11,8 @@ These data are subsequently used to process color rendering, combining base colo
 
 1. **Clone the repository**:
    ```bash
-   git clone git@github.com:Hazeliny/miniRT-final.git
-   cd MiniRT-final
+   git clone git@github.com:Hazeliny/miniRT.git
+   cd MiniRT
    ```
 
 2. **Compile the project**:
