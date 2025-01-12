@@ -35,3 +35,9 @@ These data are subsequently used to process color rendering, combining base colo
 ![ROOM](https://github.com/Hazeliny/miniRT-final/blob/main/assets/room.png)
 ![TEXTURE](https://github.com/Hazeliny/miniRT-final/blob/main/assets/texture.png)
 
+
+
+## Authors
+
+- **Lin Yao** - [GitHub](https://github.com/hazeliny)
+- **Antonio.** - [GitHub](https://github.com/Antonio1988-creator)
