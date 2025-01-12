@@ -27,6 +27,8 @@ These data are subsequently used to process color rendering, combining base colo
    ```
 
 
+![ATOMS](https://github.com/Hazeliny/miniRT/blob/main/assets/atoms.png)
+![OBJECTS](https://github.com/Hazeliny/miniRT/blob/main/assets/objects.png)
 ![MULTILIGHTS](https://github.com/Hazeliny/miniRT-final/blob/main/assets/colored_multilights.png)
 ![GENTLEMAN](https://github.com/Hazeliny/miniRT-final/blob/main/assets/gentleman.png)
 ![CHECKERBOARDCONE](https://github.com/Hazeliny/miniRT-final/blob/main/assets/checkerboard_cone.png)
