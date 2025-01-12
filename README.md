@@ -37,7 +37,3 @@ These data are subsequently used to process color rendering, combining base colo
 
 
 
-## Authors
-
-- **Lin Yao** - [GitHub](https://github.com/hazeliny)
-- **Antonio.** - [GitHub](https://github.com/Antonio1988-creator)
